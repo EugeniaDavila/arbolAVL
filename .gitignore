@@ -2,5 +2,5 @@ arbolesAVL.exe
 arbolesAVL.dev
 arbolesAVL.layout
 main.o
-Nakefile.win
+Makefile.win
 metodos.o
