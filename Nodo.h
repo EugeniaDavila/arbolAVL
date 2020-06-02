@@ -12,23 +12,24 @@ class Nodo{
 		
 	public:
 		// Constructores
-		Nodo(int info,int type);
+		Nodo(int dato,int type);
+		Nodo(int dato);
 		
 		// Métodos set()
 		void setInfo(int dato);
 		void setTipo(int t);	
 		void setRevision(int rev);
-		void setIzq(Nodo i);
-		void setDer(Nodo d);
-		void setPadre(Nodo p);
+		void setIzq(Nodo *i);
+		void setDer(Nodo *d);
+		void setPadre(Nodo *p);
 		
 		// Métodos get()
 		int getInfo();
 		int getTipo();
 		int getRevision();
-		Nodo getDer();
-		Nodo getIzq();
-		Nodo getPadre();
+		Nodo* getDer();
+		Nodo* getIzq();
+		Nodo* getPadre();
 		
 		// Métodos generales
 		Nodo* insertarNodo(int info,struct Nodo *raiz);

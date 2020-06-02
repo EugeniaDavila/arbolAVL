@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// Constructores
 Nodo::Nodo(int dato,int type){
 	info = dato;
 	izq = NULL;
@@ -12,3 +13,60 @@ Nodo::Nodo(int dato,int type){
 	revision = 0;
 	tipo = type;
 }
+
+Nodo::Nodo(int dato){
+	info = dato;
+	izq = NULL;
+	der = NULL;
+	padre = NULL;
+	revision = 0;
+	tipo = 0;
+}
+
+// Setters
+void Nodo::setInfo(int dato){
+	info = dato;
+}
+
+void Nodo::setTipo(int t){
+	tipo = t;
+}
+
+void Nodo::setIzq(Nodo *i){
+	izq = i;
+}
+
+void Nodo::setDer(Nodo *d){
+	der = d;
+}
+
+void Nodo::setPadre(Nodo *p){
+	padre = p;
+}
+
+// Getters
+int Nodo::getInfo(){
+	return info;
+}
+
+int Nodo::getTipo(){
+	return tipo;
+}
+
+int Nodo::getRevision(){
+	return revision;
+}
+
+Nodo* Nodo::getDer(){
+	return der;
+}
+
+Nodo* Nodo::getIzq(){
+	return izq;
+}
+
+Nodo* Nodo::getPadre(){
+	return padre;
+}
+
+// Métodos generales

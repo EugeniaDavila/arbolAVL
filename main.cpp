@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include "Nodo.h"
 
 using namespace std;
 
