@@ -12,6 +12,7 @@ class Nodo{
 		
 	public:
 		// Constructores
+		Nodo ();
 		Nodo(int dato,int type);
 		Nodo(int dato);
 		
@@ -29,17 +30,7 @@ class Nodo{
 		int getRevision();
 		Nodo* getDer();
 		Nodo* getIzq();
-		Nodo* getPadre();
-		
-		// Métodos generales
-		Nodo* insertarNodo(int info,struct Nodo *raiz);
-		Nodo* borrarNodo(int info,struct Nodo *raiz);
-		void preorden(struct Nodo *raiz);
-		void inorden(struct Nodo *raiz);
-		void postorden(struct Nodo *raiz);
-		void buscarNodo(int n,struct Nodo *raiz);
-		void mostrarArbol(struct Nodo *raiz);
-			
+		Nodo* getPadre();			
 };
 
 #endif

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include "Nodo.h"
+#include "nodo.cpp"
 
 using namespace std;
 
@@ -8,12 +9,15 @@ using namespace std;
 void menu();
 
 int main(int argc, char** argv) {
-	int op; //opción del menú seleccionada por el usuario
+	int op; // opción del menú seleccionada por el usuario
+	int info; // entero que el usuario añade al árbol 
 	do{
 		menu();
 		cin>>op;
 		switch(op){
 			case 1:
+				cout<<"\tDato a ingresar: ";
+				cin>>info;
 				
 			break;
 			case 2:
@@ -27,7 +31,7 @@ int main(int argc, char** argv) {
 			break;
 			case 5:
 			break;
-			case 6:
+			case 0:
 				cout<<"\n\tSaliendo del programa..."<<endl;
 				cout<<"\t";
 				system("PAUSE");
@@ -40,7 +44,7 @@ int main(int argc, char** argv) {
 		cout<<"\n\t";
 		system("pause");
 		system("cls");
-	}while(op!=6);
+	}while(op!=0);
 	return 0;
 }
 
