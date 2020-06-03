@@ -8,7 +8,14 @@ class Arbol{
 		Nodo* lista; // lista de nodos
 		
 	public:
+		// Constructor
 		Arbol();
+		
+		// setters y getters
+		void Arbol::setAltura(int a)
+		int Arbol::getAltura()
+		
+		// Métodos generales
 		Nodo* insertarNodo(int info);
 		Nodo* borrarNodo(int info,struct Nodo *raiz);
 		void preorden(struct Nodo *raiz);
