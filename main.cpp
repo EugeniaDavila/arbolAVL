@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cstdlib>
-#include "Nodo.h"
-#include "nodo.cpp"
+#include "arbol.cpp"
 
 using namespace std;
 

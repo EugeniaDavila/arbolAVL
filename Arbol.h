@@ -12,8 +12,8 @@ class Arbol{
 		Arbol();
 		
 		// setters y getters
-		void Arbol::setAltura(int a)
-		int Arbol::getAltura()
+		void setAltura(int a);
+		int getAltura();
 		
 		// Métodos generales
 		Nodo* insertarNodo(int info);
