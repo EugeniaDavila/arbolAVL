@@ -28,14 +28,22 @@ Nodo* Arbol::getRaiz(){
 /*	Revisa si la raíz del árbol existe. Si no, crea un nuevo nodo como la raíz.
 	Si ya existe, se el nodo se inserta en su lugar correspondiente. */
 Nodo* Arbol::insertarNodo(int dato){
+	bool doble = false; // toma el valor true cuando se intenta ingresar un dato que ya está en el árbol
+	Nodo *nuevo = new Nodo(dato);
+	Nodo *nodo; // apuntador que va recorriendo el árbol
 	if(raiz == NULL){
 		cout<<"\n\tEl nodo se inserto como raiz del arbol..."<<endl;
-		Nodo r(dato);
-		raiz = &r;
+		raiz = nuevo;
 		altura = 1;
-		// cout<<"raiz: "<<raiz->getInfo()<<endl;
+		//cout<<"raiz: "<<raiz->getInfo()<<endl;
 	}else{
-		
+		nodo = raiz;
+		while(!doble&&nuevo->getPadre()==NULL){
+			if(dato==nodo->getInfo()){
+				cout<<"\n\tEl nodo ya se encuentra en el arbol..."<<endl;
+				doble = true;
+			}
+		}
 	}
 	return raiz;
 }
