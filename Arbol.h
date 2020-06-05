@@ -5,7 +5,7 @@
 class Arbol{
 	private:
 		int altura;
-		Nodo* lista; // lista de nodos
+		Nodo *raiz; // raiz del árbol
 		
 	public:
 		// Constructor
@@ -13,7 +13,9 @@ class Arbol{
 		
 		// setters y getters
 		void setAltura(int a);
+		void setRaiz(Nodo *r);
 		int getAltura();
+		Nodo* getRaiz();
 		
 		// Métodos generales
 		Nodo* insertarNodo(int info);

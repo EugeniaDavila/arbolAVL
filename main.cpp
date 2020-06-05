@@ -10,6 +10,7 @@ void menu();
 int main(int argc, char** argv) {
 	int op; // opción del menú seleccionada por el usuario
 	int info; // entero que el usuario añade al árbol 
+	Arbol a;
 	do{
 		menu();
 		cin>>op;
@@ -17,7 +18,7 @@ int main(int argc, char** argv) {
 			case 1:
 				cout<<"\tDato a ingresar: ";
 				cin>>info;
-				
+				a.insertarNodo(info);
 			break;
 			case 2:
 			
