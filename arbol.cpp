@@ -27,7 +27,11 @@ Nodo* Arbol::getRaiz(){
 
 /*	Revisa si la raíz del árbol existe. Si no, crea un nuevo nodo como la raíz.
 	Si ya existe, se el nodo se inserta en su lugar correspondiente. 
-	
+	Para insertar el nodo primero se compara el valor a insertar con el valor que 
+	tiene el nodo actual; si es menor, el apuntador avanza al hijo izquierdo del nodo
+	(si hubiera), sino, se inserta uno nuevo como su hijo izquiero. Si el valor a insertar
+	es más grande que el valor del nodo actual se hace el mismo procedimiento, pero del lado
+	derecho.	
 */
 Nodo* Arbol::insertarNodo(int dato){
 	bool doble = false; // toma el valor true cuando se intenta ingresar un dato que ya está en el árbol
