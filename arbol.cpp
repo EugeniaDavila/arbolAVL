@@ -4,15 +4,18 @@
 
 using namespace std;
 
+// Constructor por defecto
 Arbol::Arbol(){
 	altura = 0;
 	raiz = NULL;
 }
 
+/* Modificar el valor de la altura del árbol */
 void Arbol::setAltura(int a){
 	altura = a;
 }
 
+/* Obtener la altura del árbol*/
 int Arbol::getAltura(){
 	return altura;
 } 
@@ -85,27 +88,46 @@ Nodo* Arbol::insertarNodo(int dato){
 	2:
 	3:
  */
-void Arbol::preorden(Nodo *raiz){
+void Arbol::preorden(){
 	cout<<"\n\tPreorden: ";
-	Nodo *nodo = raiz; // hacer que la variable nodo apunte a la raíz del árbol
+	Nodo *nodo = raiz; // hacer que la variable nodo apunte a la raíz del árbol, para no perder la referencia
 	while(raiz->getRevision()<3){
 		switch(nodo->getRevision()){
 			case 0:
-				cout<<nodo->getInfo()<<" ";
 				nodo->setRevision(1);
-				break;
+				cout<<nodo->getInfo()<<" ";
+			break;
 			case 1:
 				nodo->setRevision(2);
-				if(nodo->getIzquierda()!=NULL){
+				if(nodo->getIzq()!=NULL){
 					nodo = nodo->getIzq();
 				}
-				break;
+			break;
 			case 2:
-				break;
+				if(nodo->getDer()==NULL){
+					if(nodo->getTipo()==0){
+						nodo->setRevision(3);
+					}else{
+						nodo->setRevision(0);
+						if(nodo->getTipo()==2){
+							nodo->getPadre()->setRevision(3);
+						}
+						nodo = nodo->getPadre();
+					}
+				}else{
+					nodo = nodo->getDer();
+				}
+			break;
 			case 3:
-				break;
+				nodo->setRevision(0);
+				if(nodo->getTipo()==2){
+					nodo->getPadre()->setRevision(3);
+				}
+				nodo = nodo->getPadre();			
+			break;
 		}
 	}
+	raiz->setRevision(0);
 }
 
 

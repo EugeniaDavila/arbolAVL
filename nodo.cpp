@@ -41,6 +41,10 @@ void Nodo::setTipo(int t){
 	tipo = t;
 }
 
+void Nodo::setRevision(int rev){
+	revision = rev;
+}
+
 void Nodo::setIzq(Nodo *i){
 	izq = i;
 }
