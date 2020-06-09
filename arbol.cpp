@@ -80,13 +80,21 @@ Nodo* Arbol::insertarNodo(int dato){
 	}
 	return raiz;
 }
- /* Muestra el recorrido en preorden del árbol 
-	0:	es la primera vez que se revisa el nodo, por lo tanto el elemento se muestra en pantalla
-	1:	se revisa si el nodo tiene un hijo izquierdo, si lo tiene, el apuntador avanza a ese hijo,
+ /* Muestra el recorrido en preorden del árbol (Raíz,Nodo Izquierdo, Nodo Derecho)
+ 	El ciclo se ejecuta mientras el estado (revisión) de la ráiz del árbol sea menor a 3
+	0:	Es la primera vez que se revisa el nodo, por lo tanto el elemento se muestra en pantalla
+	1:	Se revisa si el nodo tiene un hijo izquierdo, si lo tiene, el apuntador avanza a ese hijo,
 		si no. EL estado del nodo cambia a 2 para indicar que ahora se debe revisar si el nodo tiene
 		un hijo derecho.
-	2:
-	3:
+	2:	Se revisa si el nodo actual tiene hijo derecho, si lo tiene, avanza a ese nodo.
+		Si no tiene, revisa si el nodo actual actual es una raíz, si lo escambia el estado a 3.
+		Si el nodo ya no tiene hijo derecho, entonces ese subarbol ya se terminado de analizar
+		el nodo actual reinicia su estado a 0 y si el nodo es el hijo derecho de otro nodo, se cambia
+		el estado de su nodo padre a 3, para indicar que el análisis de sus nodos hijo está completo.
+		El apuntador se coloca en el nodo padre. 
+	3:	El estado 3 indica que todos los hijos de un nodo ya han sido analizados.
+		El estado del nodo se reinicia a 0 si el nodo es de tipo 2 (hijo derecho), y se modifica el 
+		estado de su nodo padre a 3.
  */
 void Arbol::preorden(){
 	cout<<"\n\tPreorden: ";
