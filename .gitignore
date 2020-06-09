@@ -4,3 +4,6 @@ arbolesAVL.layout
 main.o
 Makefile.win
 metodos.o
+Arbol.h.gch
+main.exe
+Nodo.h.gch
