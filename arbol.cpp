@@ -80,8 +80,12 @@ Nodo* Arbol::insertarNodo(int dato){
 	}
 	return raiz;
 }
+
  /* Muestra el recorrido en preorden del árbol (Raíz,Nodo Izquierdo, Nodo Derecho)
- 	El ciclo se ejecuta mientras el estado (revisión) de la ráiz del árbol sea menor a 3
+ 	El ciclo se ejecuta mientras el estado (revisión) de la ráiz del árbol sea menor a 3.
+ 	El árbol se va recorriendo de la siguiente manera: al apuntar a un nodo se imprime su valor
+ 	y se avanza a su hijo izquierdo, mostrando tambien su valor. Si no hay hijo izquierdo, en su lugar
+	se avanza al hijo derecho mostrando su valor. 
 	0:	Es la primera vez que se revisa el nodo, por lo tanto el elemento se muestra en pantalla
 	1:	Se revisa si el nodo tiene un hijo izquierdo, si lo tiene, el apuntador avanza a ese hijo,
 		si no. EL estado del nodo cambia a 2 para indicar que ahora se debe revisar si el nodo tiene
@@ -138,8 +142,16 @@ void Arbol::preorden(){
 	raiz->setRevision(0);
 }
 
-
-
+/*	Muestra el recorrido en inorden del árbol (Nodo Izquierdo, Raíz, Nodo Derecho)
+	El árbol se va recorriendo nodo a nodo de la siguiente manera: se comprueba primero
+	si un nodo tiene un hijo izquierdo, si lo tiene se avanza a ese hijo, si no, se
+	muestra el valor del nodo y se avanza al hijo derecho, repitiendo el análisis para
+	ese nodo. 
+*/
+void Arbol::inorden(){
+	cout<<"\n\tInorden: ";
+	
+}
 
 
 
