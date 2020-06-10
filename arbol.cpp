@@ -86,6 +86,7 @@ Nodo* Arbol::insertarNodo(int dato){
  	El árbol se va recorriendo de la siguiente manera: al apuntar a un nodo se imprime su valor
  	y se avanza a su hijo izquierdo, mostrando tambien su valor. Si no hay hijo izquierdo, en su lugar
 	se avanza al hijo derecho mostrando su valor. 
+	Con el atributo revisión se indica cuantas veces se ha pasado por un nodo y que es lo que se debe hacer con el.
 	0:	Es la primera vez que se revisa el nodo, por lo tanto el elemento se muestra en pantalla
 	1:	Se revisa si el nodo tiene un hijo izquierdo, si lo tiene, el apuntador avanza a ese hijo,
 		si no. EL estado del nodo cambia a 2 para indicar que ahora se debe revisar si el nodo tiene
@@ -147,10 +148,52 @@ void Arbol::preorden(){
 	si un nodo tiene un hijo izquierdo, si lo tiene se avanza a ese hijo, si no, se
 	muestra el valor del nodo y se avanza al hijo derecho, repitiendo el análisis para
 	ese nodo. 
+	Con el atributo revisión se indica cuantas veces se ha pasado por un nodo y que es lo que se debe hacer con el.
+	0:	Revisa si el nodo tiene hijo izquierdo, si lo tiene avanza a ese nodo, si no, imprime el valor del nodo actual.
+	2:	Revisa si el nodo actual tiene hijo derecho, si lo tiene avanza a ese nodo. Si no lo tiene se puede suceder alguno
+		de los siguientes tres casos:
+	 	a)	Si el nodo actual es el hijo izquierdo de otro nodo, el puntero avanza a su nodo padre y muestra su valor en pantalla; 
+		 	despues el valor de revisión del nodo se cambia a 2 para indicar que se debe revisar su hijo derecho.
+		b)	Si el nodo actual es la raíz del árbol, el ciclo finaliza y su valor revision se inicializa a cero
+		c)	Si el nodo es el hijo derecho de otro nodo, el puntero avanza al nodo padre y su atributo revision se cambia a 1,
+			indicando que ya se han analizando ambos lados de ese subárbol
 */
 void Arbol::inorden(){
 	cout<<"\n\tInorden: ";
-	
+	bool terminado = false;
+	Nodo *nodo = raiz; // apuntar a la raíz del árbol sin perder la referencia original
+	while(!terminado){
+		switch(nodo->getRevision()){
+			case 0:
+				nodo->setRevision(2);
+				if(nodo->getIzq()==NULL){
+					cout<<nodo->getDato()<<" ";
+				}else{
+					nodo = nodo->getIzq();
+				}
+			break;
+			case 1:
+			break;
+			case 2:
+				nodo->setRevision(0);
+				if(nodo->getDer()==NULL){
+					if(nodo->getTipo()==1){
+						nodo = nodo->getPadre();
+						cout<<" "<<nodo->getDato();
+						nodo->setRevision(2);
+					}else if(nodo->getTipo()==0){
+						terminado = true;
+						nodo->setRevision(0);
+					}else{
+						nodo = nodo->getPadre();
+						nodo->setRevision(1);
+					}
+				}else{
+					nodo = nodo->getDer();
+				}
+			break;
+		}
+	} 
 }
 
 
