@@ -156,7 +156,7 @@ void Arbol::preorden(){
 		 	despues el valor de revisión del nodo se cambia a 2 para indicar que se debe revisar su hijo derecho.
 		b)	Si el nodo actual es la raíz del árbol, el ciclo finaliza y su valor revision se inicializa a cero
 		c)	Si el nodo es el hijo derecho de otro nodo, el puntero avanza al nodo padre y su atributo revision se cambia a 1,
-			indicando que ya se han analizando ambos lados de ese subárbol
+			indicando que ya se han analizado ambos lados de ese subárbol
 */
 void Arbol::inorden(){
 	cout<<"\n\tInorden: ";
