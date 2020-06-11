@@ -31,6 +31,7 @@ int main(int argc, char** argv) {
 			break;
 			case 5:
 				a.preorden();
+				a.inorden();
 			break;
 			case 0:
 				cout<<"\n\tSaliendo del programa..."<<endl;

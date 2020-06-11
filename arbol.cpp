@@ -150,6 +150,8 @@ void Arbol::preorden(){
 	ese nodo. 
 	Con el atributo revisión se indica cuantas veces se ha pasado por un nodo y que es lo que se debe hacer con el.
 	0:	Revisa si el nodo tiene hijo izquierdo, si lo tiene avanza a ese nodo, si no, imprime el valor del nodo actual.
+	1:	Este estado lo tiene el nodo del cual ya se revisaron ambos lados de sus nodos hijos, pero dicho nodo puede
+		ser parte de otro subárbol del cual sólo se ha revisado un lado.
 	2:	Revisa si el nodo actual tiene hijo derecho, si lo tiene avanza a ese nodo. Si no lo tiene se puede suceder alguno
 		de los siguientes tres casos:
 	 	a)	Si el nodo actual es el hijo izquierdo de otro nodo, el puntero avanza a su nodo padre y muestra su valor en pantalla; 
@@ -167,19 +169,32 @@ void Arbol::inorden(){
 			case 0:
 				nodo->setRevision(2);
 				if(nodo->getIzq()==NULL){
-					cout<<nodo->getDato()<<" ";
+					cout<<" "<<nodo->getInfo();
 				}else{
 					nodo = nodo->getIzq();
 				}
 			break;
 			case 1:
+				if(nodo->getTipo()==0){
+					nodo->setRevision(0);
+					terminado = true;
+				}else if(nodo->getTipo()==1){
+					nodo->setRevision(0);
+					nodo = nodo->getPadre();
+					cout<<" "<<nodo->getInfo();
+					nodo->setRevision(2);
+				}else{
+					nodo->setRevision(0);
+					nodo = nodo->getPadre();
+					nodo->setRevision(1);
+				}
 			break;
 			case 2:
 				nodo->setRevision(0);
 				if(nodo->getDer()==NULL){
 					if(nodo->getTipo()==1){
 						nodo = nodo->getPadre();
-						cout<<" "<<nodo->getDato();
+						cout<<" "<<nodo->getInfo();
 						nodo->setRevision(2);
 					}else if(nodo->getTipo()==0){
 						terminado = true;
