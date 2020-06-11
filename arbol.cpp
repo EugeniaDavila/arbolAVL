@@ -211,6 +211,46 @@ void Arbol::inorden(){
 	} 
 }
 
-
-
+/*	Muestra el recorrido en postorden del árbol (Nodo Izquierdo, Nodo Derecho, Raíz)
+	0:	Revisa si el nodo tiene hijo izquierdo, si lo tiene, avanza a ese nodo.
+		Si el nodo no lo tiene, solo cambia su revisión a 1, indicando que se debe revisar su hijo derecho
+	1:	Revisa si el nodo actual tiene hijo derecho, si lo tiene avanza a este nodo.
+		Si no lo tiene, revisión cambia a 2, en donde se indica que ya se han revisado ambos lados del nodo.
+	2:	Se analiza el tipo de nodo:
+		a)	Si el nodo es la raíz del árbol, entonces el termina su ejecución al estar analizados ambos lados del árbol.
+		b)	Si el nodo es un hijo izquierdo o derecho, se muestra en pantalla y el apuntador avanza a su nodo padre
+*/
+void Arbol::postorden(){
+	cout<<"\n\tPostorden: ";
+	Nodo *nodo;
+	nodo = raiz;
+	bool terminado = false;
+	while(!terminado){
+		switch(nodo->getRevision()){
+			case 0:
+				nodo->setRevision(1);
+				if(nodo->getIzq()!=NULL){
+					nodo = nodo->getIzq();
+				}
+			break;
+			case 1:
+				nodo->setRevision(2);
+				if(nodo->getDer()!=NULL){
+					nodo = nodo->getDer();
+				}
+			break;
+			case 2:
+				if(nodo->getTipo()==0){
+					terminado = true;
+				}else{ // si el nodo es de tipo 1 o 2
+					nodo->setRevision(0);
+					cout<<" "<<nodo->getInfo();
+					nodo = nodo->getPadre();
+				}
+			break;
+		}
+	}
+	raiz->setRevision(0);
+	cout<<" "<<raiz->getInfo()<<endl;
+}
 

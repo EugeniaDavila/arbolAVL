@@ -32,6 +32,7 @@ int main(int argc, char** argv) {
 			case 5:
 				a.preorden();
 				a.inorden();
+				a.postorden();
 			break;
 			case 0:
 				cout<<"\n\tSaliendo del programa..."<<endl;
