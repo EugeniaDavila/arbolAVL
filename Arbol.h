@@ -23,7 +23,7 @@ class Arbol{
 		void preorden();
 		void inorden();
 		void postorden();
-		void buscarNodo(int n,struct Nodo *raiz);
+		Nodo* buscarNodo(int n);
 		void mostrarArbol(struct Nodo *raiz);
 };
 

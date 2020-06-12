@@ -254,3 +254,39 @@ void Arbol::postorden(){
 	cout<<" "<<raiz->getInfo()<<endl;
 }
 
+/*	Para buscar un nodo se compara el valor ingresado por el usuario con
+	el valor del nodo actual, iniciando desde la raíz, Si el valor del nodo
+	es menor al valor del usuario, se busca avanzar al hijo izquierdo del
+	nodo actual. Si el valor que busca el usuario es mayor al valor del nodo
+	actual, se busca avanzar al hijo derecho. Si el nodo al que se debe avanzar
+	no existiera, entonces el dato buscado no se encontraría en el árbol, por lo que
+	la bandera fallo tomaría el valor true. 
+*/
+Nodo* Arbol::buscarNodo(int n){
+	bool encontrado = false;
+	bool fallo = false;
+	Nodo *nodo = raiz;
+	if(raiz!=NULL){
+		while(!encontrado&&!fallo){
+			if(n>nodo->getInfo()){
+				if(nodo->getDer()!=NULL){
+					nodo = nodo->getDer();
+				}else{
+					fallo = true;
+				}
+			}else if(n<nodo->getInfo()){
+				if(nodo->getIzq()!=NULL){
+					nodo = nodo->getIzq();
+				}else{
+					fallo = true;
+				}
+			}else{
+				encontrado = true;
+			}
+		}
+		if(fallo){
+			nodo = NULL;
+		}
+	}
+	return nodo;
+}

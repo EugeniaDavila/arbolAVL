@@ -11,6 +11,7 @@ int main(int argc, char** argv) {
 	int op; // opción del menú seleccionada por el usuario
 	int info; // entero que el usuario añade al árbol 
 	Arbol a;
+	Nodo *n;
 	do{
 		menu();
 		cin>>op;
@@ -24,7 +25,18 @@ int main(int argc, char** argv) {
 			
 			break;
 			case 3:
-				
+				if(a.getRaiz()!=NULL){
+					cout<<"\tDato a buscar: ";
+					cin>>info;
+					n = a.buscarNodo(info);
+					if(n==NULL){
+						cout<<"\tEl nodo no est\xa0 en el \xa0rbol..."<<endl;
+					}else{
+						cout<<"\tEl nodo se encuentra en el \xa0rbol..."<<endl;
+					}
+				}else{
+					cout<<"\n\tEl arbol est\xa0 vac\xa1o..."<<endl;	
+				}
 			break;
 			case 4:
 				
