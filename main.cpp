@@ -71,6 +71,6 @@ void menu(){
 	cout<<"\tBuscar nodo...........................................[3]"<<endl;
 	cout<<"\tMostrar arbol.........................................[4]"<<endl;
 	cout<<"\tMostrar recorridos (inorden, preorden, postorden).....[5]"<<endl;
-	cout<<"\tSalir.................................................[6]"<<endl;
+	cout<<"\tSalir.................................................[0]"<<endl;
 	cout<<"\n\tSeleccione una opcion: ";
 }
