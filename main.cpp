@@ -22,7 +22,14 @@ int main(int argc, char** argv) {
 				a.insertarNodo(info);
 			break;
 			case 2:
-			
+				if(a.getRaiz()!=NULL){
+					cout<<"Valor del nodo: "<<a.getRaiz()->getInfo()<<endl;
+					cout<<"\tDato a borrar: ";
+					cin>>info;
+					a.borrarNodo(info);
+				}else{
+					cout<<"\n\tEl arbol est\xa0 vac\xa1o..."<<endl;	
+				}
 			break;
 			case 3:
 				if(a.getRaiz()!=NULL){

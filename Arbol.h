@@ -19,7 +19,7 @@ class Arbol{
 		
 		// Métodos generales
 		Nodo* insertarNodo(int info);
-		Nodo* borrarNodo(int info,struct Nodo *raiz);
+		void borrarNodo(int info);
 		void preorden();
 		void inorden();
 		void postorden();

@@ -43,14 +43,14 @@ Nodo* Arbol::insertarNodo(int dato){
 	Nodo *nuevo = new Nodo(dato);
 	Nodo *nodo; // apuntador que va recorriendo el árbol
 	if(raiz == NULL){
-		cout<<"\n\tEl nodo se insert\xa2 como ra\xa1z del \xa2rbol..."<<endl;
+		cout<<"\n\tEl nodo se insert\xa2 como ra\xa1z del \xa0rbol..."<<endl;
 		raiz = nuevo;
 		altura = 1;
 	}else{
 		nodo = raiz;
 		while(!doble && nuevo->getPadre()==NULL){
 			if(dato==nodo->getInfo()){
-				cout<<"\n\tEl nodo ya se encuentra en el \xa2rbol..."<<endl;
+				cout<<"\n\tEl nodo ya se encuentra en el \xa0rbol..."<<endl;
 				doble = true;
 				delete nuevo;
 			}else if(dato < nodo->getInfo()){
@@ -289,4 +289,24 @@ Nodo* Arbol::buscarNodo(int n){
 		}
 	}
 	return nodo;
+}
+
+void Arbol::borrarNodo(int info){
+	Nodo *nodo = buscarNodo(info);
+	if(nodo==NULL){
+		cout<<"\tNo se pudo eliminar el nodo."<<endl;
+		cout<<"\tEl nodo no est\xa0 en el \xa0rbol..."<<endl;
+	}else{
+		cout<<"\tEl nodo se encuentra en el \xa0rbol..."<<endl;
+		if(nodo->getDer()==NULL&nodo->getIzq()==NULL){ // si el nodo no tiene hijos
+			if(nodo->getTipo()==1){
+				nodo->getPadre()->setIzq(NULL);
+			}else if(nodo->getTipo()==2){
+				nodo->getPadre()->setDer(NULL);
+			}else{
+				raiz = NULL;
+			}
+			delete nodo;
+		}
+	}
 }
