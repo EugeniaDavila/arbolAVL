@@ -304,21 +304,23 @@ void Arbol::borrarNodo(int info){
 				nodo->getPadre()->setIzq(NULL);
 			}else if(nodo->getTipo()==2){ // si el nodo es un hijo derecho
 				nodo->getPadre()->setDer(NULL);
-			}
-		}else if(nodo->getIzq()!=NULL&&nodo->getDer()==NULL){
-			cout<<"\tEl nodo tiene un hijo izquierdo..."<<endl;
-			if(nodo->getTipo()==1){  
-				nodo->getPadre()->setIzq(nodo->getIzq());
-				nodo->getIzq()->setPadre(nodo->getPadre());
-			}else if(nodo->getTipo()==2){ 
-				nodo->getPadre()->setDer(nodo->getIzq());
-				nodo->getIzq()->setPadre(nodo->getPadre());
-				nodo->getIzq()->setTipo(2);
 			}else{
-				raiz=nodo->getIzq();
-				raiz->setTipo(0);
-				raiz->setPadre(NULL);
+				raiz = NULL;
 			}
+		}else if((nodo->getIzq()!=NULL&&nodo->getDer()==NULL)||(nodo->getIzq()==NULL&&nodo->getDer()!=NULL)){ 
+			// si el nodo sólo tiene un hijo
+			cout<<"\tEl nodo tiene un hijo..."<<endl;
+			if(nodo->getIzq()!=NULL){
+				nodo->setInfo(nodo->getIzq()->getInfo());
+				nodo = nodo->getIzq();
+				nodo->getPadre()->setIzq(NULL);
+			}else if(nodo->getDer()!=NULL){
+				nodo->setInfo(nodo->getDer()->getInfo());
+				nodo = nodo->getDer();
+				nodo->getPadre()->setDer(NULL);
+			}		
+		}else{ // el nodo tiene ambos hijos
+			
 		}
 		delete nodo;
 		nodo = NULL;
