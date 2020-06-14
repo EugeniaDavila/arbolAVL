@@ -309,8 +309,11 @@ void Arbol::borrarNodo(int info){
 			cout<<"\tEl nodo tiene un hijo izquierdo..."<<endl;
 			if(nodo->getTipo()==1){  
 				nodo->getPadre()->setIzq(nodo->getIzq());
+				nodo->getIzq()->setPadre(nodo->getPadre());
 			}else if(nodo->getTipo()==2){ 
 				nodo->getPadre()->setDer(nodo->getIzq());
+				nodo->getIzq()->setPadre(nodo->getPadre());
+				nodo->getIzq()->setTipo(2);
 			}else{
 				raiz=nodo->getIzq();
 				raiz->setTipo(0);
