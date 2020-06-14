@@ -169,7 +169,7 @@ void Arbol::inorden(){
 			case 0:
 				nodo->setRevision(2);
 				if(nodo->getIzq()==NULL){
-					cout<<" "<<nodo->getInfo();
+					cout<<nodo->getInfo()<<" ";
 				}else{
 					nodo = nodo->getIzq();
 				}
@@ -181,7 +181,7 @@ void Arbol::inorden(){
 				}else if(nodo->getTipo()==1){
 					nodo->setRevision(0);
 					nodo = nodo->getPadre();
-					cout<<" "<<nodo->getInfo();
+					cout<<nodo->getInfo()<<" ";
 					nodo->setRevision(2);
 				}else{
 					nodo->setRevision(0);
@@ -194,7 +194,7 @@ void Arbol::inorden(){
 				if(nodo->getDer()==NULL){
 					if(nodo->getTipo()==1){
 						nodo = nodo->getPadre();
-						cout<<" "<<nodo->getInfo();
+						cout<<nodo->getInfo()<<" ";
 						nodo->setRevision(2);
 					}else if(nodo->getTipo()==0){
 						terminado = true;
@@ -244,14 +244,14 @@ void Arbol::postorden(){
 					terminado = true;
 				}else{ // si el nodo es de tipo 1 o 2
 					nodo->setRevision(0);
-					cout<<" "<<nodo->getInfo();
+					cout<<nodo->getInfo()<<" ";
 					nodo = nodo->getPadre();
 				}
 			break;
 		}
 	}
 	raiz->setRevision(0);
-	cout<<" "<<raiz->getInfo()<<endl;
+	cout<<raiz->getInfo()<<endl;
 }
 
 /*	Para buscar un nodo se compara el valor ingresado por el usuario con
@@ -297,16 +297,27 @@ void Arbol::borrarNodo(int info){
 		cout<<"\tNo se pudo eliminar el nodo."<<endl;
 		cout<<"\tEl nodo no est\xa0 en el \xa0rbol..."<<endl;
 	}else{
-		cout<<"\tEl nodo se encuentra en el \xa0rbol..."<<endl;
+		cout<<"\tEliminando nodo..."<<endl;
 		if(nodo->getDer()==NULL&nodo->getIzq()==NULL){ // si el nodo no tiene hijos
-			if(nodo->getTipo()==1){
+			cout<<"\tEl nodo no tiene hijos..."<<endl;
+			if(nodo->getTipo()==1){  // si el nodo es un hijo izquierdo
 				nodo->getPadre()->setIzq(NULL);
-			}else if(nodo->getTipo()==2){
+			}else if(nodo->getTipo()==2){ // si el nodo es un hijo derecho
 				nodo->getPadre()->setDer(NULL);
-			}else{
-				raiz = NULL;
 			}
-			delete nodo;
+		}else if(nodo->getIzq()!=NULL&&nodo->getDer()==NULL){
+			cout<<"\tEl nodo tiene un hijo izquierdo..."<<endl;
+			if(nodo->getTipo()==1){  
+
+			}else if(nodo->getTipo()==2){ 
+				
+			}else{
+				raiz=nodo->getIzq();
+				raiz->setTipo(0);
+				raiz->setPadre(NULL);
+			}
 		}
+		delete nodo;
+		nodo = NULL;
 	}
 }

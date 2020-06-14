@@ -24,6 +24,8 @@ int main(int argc, char** argv) {
 			case 2:
 				if(a.getRaiz()!=NULL){
 					cout<<"Valor del nodo: "<<a.getRaiz()->getInfo()<<endl;
+					cout<<"Tipo de nodo: "<<a.getRaiz()->getTipo()<<endl;
+					cout<<"Liga izq: "<<a.getRaiz()->getIzq()<<endl;
 					cout<<"\tDato a borrar: ";
 					cin>>info;
 					a.borrarNodo(info);
