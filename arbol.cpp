@@ -320,9 +320,15 @@ void Arbol::borrarNodo(int info){
 				nodo->getPadre()->setDer(NULL);
 			}		
 		}else{ // el nodo tiene ambos hijos
-			
+			// Buscar el nodo mayor del lado izquierdo o el menor del lado derecho
+			// Reemplazar el nodo encontrado por el que se quiere borrar
 		}
 		delete nodo;
 		nodo = NULL;
 	}
+}
+
+Nodo* Arbol::buscarMayorIzq(Nodo *n){
+	Nodo *nodo = n;
+	
 }

@@ -24,6 +24,7 @@ class Arbol{
 		void inorden();
 		void postorden();
 		Nodo* buscarNodo(int n);
+		Nodo* buscarMayorIzq(Nodo *n);
 		void mostrarArbol(struct Nodo *raiz);
 };
 
