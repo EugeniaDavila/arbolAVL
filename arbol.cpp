@@ -293,6 +293,7 @@ Nodo* Arbol::buscarNodo(int n){
 
 void Arbol::borrarNodo(int info){
 	Nodo *nodo = buscarNodo(info);
+	Nodo *sustituto;
 	if(nodo==NULL){
 		cout<<"\tNo se pudo eliminar el nodo."<<endl;
 		cout<<"\tEl nodo no est\xa0 en el \xa0rbol..."<<endl;
@@ -320,8 +321,29 @@ void Arbol::borrarNodo(int info){
 				nodo->getPadre()->setDer(NULL);
 			}		
 		}else{ // el nodo tiene ambos hijos
+			cout<<"\tEl nodo tiene dos hijos..."<<endl;
 			// Buscar el nodo mayor del lado izquierdo o el menor del lado derecho
+			// En este caso se utiliza el nodo de mayor valor del subárbol izquierdo
+			sustituto = buscarMayorIzq(nodo);
 			// Reemplazar el nodo encontrado por el que se quiere borrar
+			nodo->setInfo(sustituto->getInfo());
+			nodo = sustituto;
+			cout<<"info sustituto: "<<nodo->getInfo()<<endl;
+			if(nodo->getIzq()!= NULL){
+				cout<<"padre del sustituto: "<<nodo->getPadre()->getInfo()<<endl;
+				if(nodo->getPadre()!=NULL){
+					nodo->getIzq()->setPadre(nodo->getPadre());
+				}				
+				nodo->getPadre()->setDer(nodo->getIzq());
+				nodo->getIzq()->setTipo(nodo->getTipo());
+			}else{
+				cout<<"padre del sustituto: "<<nodo->getPadre()->getInfo()<<endl;
+				if(nodo->getTipo()==1){
+					nodo->getPadre()->setIzq(NULL);
+				}else if(nodo->getTipo()==2){
+					nodo->getPadre()->setDer(NULL);
+				}				
+			}
 		}
 		delete nodo;
 		nodo = NULL;
@@ -329,6 +351,10 @@ void Arbol::borrarNodo(int info){
 }
 
 Nodo* Arbol::buscarMayorIzq(Nodo *n){
-	Nodo *nodo = n;
-	
+	Nodo *nodo = n->getIzq();
+	while(nodo->getDer()!=NULL){
+		nodo = nodo->getDer();
+	}
+	cout<<"nodo sustituto: "<<nodo->getInfo()<<endl;
+	return nodo;
 }
