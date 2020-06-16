@@ -291,6 +291,12 @@ Nodo* Arbol::buscarNodo(int n){
 	return nodo;
 }
 
+/*	Función para eliminar un nodo seleccionado por el usuario.
+	Se llama a la función buscarNodo y el resultado si es distinto de NULL se
+	apunta mediante la variable nodo.
+	Después se procede a hacer la eliminación del nodo en base a las reglas de
+	árboles binarios.
+*/
 void Arbol::borrarNodo(int info){
 	Nodo *nodo = buscarNodo(info);
 	Nodo *sustituto;
@@ -328,16 +334,13 @@ void Arbol::borrarNodo(int info){
 			// Reemplazar el nodo encontrado por el que se quiere borrar
 			nodo->setInfo(sustituto->getInfo());
 			nodo = sustituto;
-			cout<<"info sustituto: "<<nodo->getInfo()<<endl;
 			if(nodo->getIzq()!= NULL){
-				cout<<"padre del sustituto: "<<nodo->getPadre()->getInfo()<<endl;
 				if(nodo->getPadre()!=NULL){
 					nodo->getIzq()->setPadre(nodo->getPadre());
 				}				
 				nodo->getPadre()->setDer(nodo->getIzq());
 				nodo->getIzq()->setTipo(nodo->getTipo());
 			}else{
-				cout<<"padre del sustituto: "<<nodo->getPadre()->getInfo()<<endl;
 				if(nodo->getTipo()==1){
 					nodo->getPadre()->setIzq(NULL);
 				}else if(nodo->getTipo()==2){
@@ -350,11 +353,16 @@ void Arbol::borrarNodo(int info){
 	}
 }
 
+/*	Busca el nodo de mayor valor del subárbol izquierdo.
+	El nodo siempre será encontrado avanzando al nodo izquierdo del padre del subárbol
+	y despues avanzando por el hijo derecho mientras este sea distinto de NULL
+*/
 Nodo* Arbol::buscarMayorIzq(Nodo *n){
 	Nodo *nodo = n->getIzq();
 	while(nodo->getDer()!=NULL){
 		nodo = nodo->getDer();
 	}
-	cout<<"nodo sustituto: "<<nodo->getInfo()<<endl;
 	return nodo;
 }
+
+// comentarios para las funciones de borrar
