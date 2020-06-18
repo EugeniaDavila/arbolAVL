@@ -365,4 +365,58 @@ Nodo* Arbol::buscarMayorIzq(Nodo *n){
 	return nodo;
 }
 
-// comentarios para las funciones de borrar
+/*	El factor de equilibrio se debe calcular para cada nodo del árbol.
+	Para un nodo T del árbol la altura de los subárboles izquierdo y derecho no deben
+	diferir en más de una unidad.
+*/
+void Arbol::calcularEquilibrio(){
+	Nodo *nodo = raiz;
+	bool fallo = false;
+	int altura;
+	while(raiz->getRevision()<=2&&!fallo){
+		switch(nodo->getRevision()){
+			case 0: 
+				nodo->setRevision(1);
+				if(nodo->getIzq()!=NULL){
+					nodo = nodo->getIzq();
+				}else{
+					nodo->setAlturaIzq(0);
+				}
+			break;
+			case 1:
+				nodo->setRevision(2);
+				if(nodo->getDer()!=NULL){
+					nodo = nodo->getDer();
+				}else{
+					nodo->setAlturaDer(0);
+				}
+			break;
+			case 2:
+				if(abs(nodo->getAlturaIzq()-nodo->getAlturaDer()>1)){
+					fallo = true;
+					cout<<"El arbol no esta equilibrado..."<<endl;
+					cout<<nodo->getInfo()<<endl;
+				}
+				altura = (nodo->getAlturaIzq()>=nodo->getAlturaDer())?nodo->getAlturaIzq():nodo->getAlturaDer();
+				altura++;
+				if(nodo->getTipo()==0){
+					cout<<"Nodo raiz"<<endl;
+					raiz->setRevision(3);
+				}else{
+					nodo = notificarNodoPadre(nodo,altura);
+				}
+			break;
+		}
+		raiz->setRevision(0);
+	}
+}
+
+Nodo* Arbol::notificarNodoPadre(Nodo *n,altura){
+	n->setRevision(0);
+	if(n->getTipo()==1){
+		nodo->getPadre()->setAlturaIzq(altura);
+	}else if(nodo->getTipo()==2){
+		nodo->getPadre()->setAlturaDer(altura);
+	}
+	return n->getPadre();
+}

@@ -26,6 +26,8 @@ class Arbol{
 		Nodo* buscarNodo(int n);
 		Nodo* buscarMayorIzq(Nodo *n);
 		void mostrarArbol(struct Nodo *raiz);
+		void calcularEquilibrio();
+		Nodo* notificarNodoPadre(Nodo *n,int altura);
 };
 
 #endif

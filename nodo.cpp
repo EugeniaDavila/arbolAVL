@@ -57,6 +57,14 @@ void Nodo::setPadre(Nodo *p){
 	padre = p;
 }
 
+void Nodo::setAlturaIzq(int i){
+	alturaIzq = i;
+}
+
+void Nodo::setAlturaDer(int d){
+	alturaDer = d;
+}
+
 // Getters
 int Nodo::getInfo(){
 	return info;
@@ -81,3 +89,11 @@ Nodo* Nodo::getIzq(){
 Nodo* Nodo::getPadre(){
 	return padre;
 }
+
+int Nodo::getAlturaIzq(){
+	return alturaIzq;
+}
+
+int Nodo::getAlturaDer(){
+	return alturaDer;
+}		

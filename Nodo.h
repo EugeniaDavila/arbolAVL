@@ -9,6 +9,8 @@ class Nodo{
 		Nodo *izq; // enlace al hijo izquierdo
 		Nodo *der; // enlace al hijo derecho
 		Nodo *padre; // enlace al padre del nodo
+		int alturaIzq;
+		int alturaDer;
 		
 	public:
 		// Constructores
@@ -23,6 +25,8 @@ class Nodo{
 		void setIzq(Nodo *i);
 		void setDer(Nodo *d);
 		void setPadre(Nodo *p);
+		void setAlturaIzq(int i);
+		void setAlturaDer(int d);
 		
 		// Métodos get()
 		int getInfo();
@@ -30,7 +34,9 @@ class Nodo{
 		int getRevision();
 		Nodo* getDer();
 		Nodo* getIzq();
-		Nodo* getPadre();			
+		Nodo* getPadre();
+		int getAlturaIzq();
+		int getAlturaDer();			
 };
 
 #endif
