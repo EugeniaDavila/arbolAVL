@@ -1,6 +1,7 @@
 #include "Arbol.h"
 #include <iostream>
 #include <cstdlib>
+#include <cmath>
 
 using namespace std;
 
@@ -376,47 +377,63 @@ void Arbol::calcularEquilibrio(){
 	while(raiz->getRevision()<=2&&!fallo){
 		switch(nodo->getRevision()){
 			case 0: 
+				// revisa si el nodo tiene hijo izquierdo
+				cout<<"0: "<<nodo->getInfo()<<endl;
 				nodo->setRevision(1);
 				if(nodo->getIzq()!=NULL){
 					nodo = nodo->getIzq();
 				}else{
 					nodo->setAlturaIzq(0);
 				}
+				system("pause");
 			break;
 			case 1:
+				// revisa si el nodo tiene hijo derecho
+				cout<<"1: "<<nodo->getInfo()<<endl;
 				nodo->setRevision(2);
 				if(nodo->getDer()!=NULL){
 					nodo = nodo->getDer();
 				}else{
 					nodo->setAlturaDer(0);
 				}
+				system("pause");
 			break;
 			case 2:
-				if(abs(nodo->getAlturaIzq()-nodo->getAlturaDer()>1)){
+				// calcula el factor de equilibrio el nodo
+				cout<<"2: "<<nodo->getInfo()<<endl;
+				cout<<nodo->getAlturaIzq()<<"-"<<nodo->getAlturaDer()<<endl;
+				cout<<"equilibrio: "<<abs(nodo->getAlturaIzq()-nodo->getAlturaDer())<<endl;
+				if(abs(nodo->getAlturaIzq()-nodo->getAlturaDer())>1){
 					fallo = true;
 					cout<<"El arbol no esta equilibrado..."<<endl;
-					cout<<nodo->getInfo()<<endl;
-				}
-				altura = (nodo->getAlturaIzq()>=nodo->getAlturaDer())?nodo->getAlturaIzq():nodo->getAlturaDer();
-				altura++;
-				if(nodo->getTipo()==0){
-					cout<<"Nodo raiz"<<endl;
-					raiz->setRevision(3);
+					cout<<"Nodo: "<<nodo->getInfo()<<endl;
 				}else{
-					nodo = notificarNodoPadre(nodo,altura);
+					// regresar la altura del árbol más grande
+					altura = (nodo->getAlturaIzq()>=nodo->getAlturaDer())?nodo->getAlturaIzq():nodo->getAlturaDer();
+					altura++;
+					if(nodo->getTipo()==0){
+						cout<<"Nodo raiz equilibrado..."<<endl;
+						raiz->setRevision(3);
+					}else{
+						nodo = notificarNodoPadre(nodo,altura);
+					}
 				}
+				system("pause");
 			break;
 		}
-		raiz->setRevision(0);
 	}
+	raiz->setRevision(0);
+	//regresar nodo no balanceado
 }
 
-Nodo* Arbol::notificarNodoPadre(Nodo *n,altura){
+Nodo* Arbol::notificarNodoPadre(Nodo *n,int altura){
 	n->setRevision(0);
 	if(n->getTipo()==1){
-		nodo->getPadre()->setAlturaIzq(altura);
-	}else if(nodo->getTipo()==2){
-		nodo->getPadre()->setAlturaDer(altura);
+		// mandar altura del subárbol izquierdo al nodo raiz
+		n->getPadre()->setAlturaIzq(altura);
+	}else if(n->getTipo()==2){
+		// mandar altura del subárbol derecho al nodo raiz
+		n->getPadre()->setAlturaDer(altura);
 	}
 	return n->getPadre();
 }
