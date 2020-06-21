@@ -5,7 +5,7 @@
 
 using namespace std;
 
-// Constructor por defecto
+/* Constructor por defecto */
 Arbol::Arbol(){
 	altura = 0;
 	raiz = NULL;
@@ -399,7 +399,7 @@ void Arbol::calcularEquilibrio(){
 				system("pause");
 			break;
 			case 2:
-				// calcula el factor de equilibrio el nodo
+				// calcula el factor de equilibrio del nodo
 				cout<<"2: "<<nodo->getInfo()<<endl;
 				cout<<nodo->getAlturaIzq()<<"-"<<nodo->getAlturaDer()<<endl;
 				cout<<"equilibrio: "<<abs(nodo->getAlturaIzq()-nodo->getAlturaDer())<<endl;
@@ -415,6 +415,7 @@ void Arbol::calcularEquilibrio(){
 						cout<<"Nodo raiz equilibrado..."<<endl;
 						raiz->setRevision(3);
 					}else{
+						nodo->setRevision(0);
 						nodo = notificarNodoPadre(nodo,altura);
 					}
 				}
@@ -422,12 +423,20 @@ void Arbol::calcularEquilibrio(){
 			break;
 		}
 	}
+	// Reiniciar el atributo revisión a 0 para los padres del nodo desequilibrado
+	Nodo *aux = nodo;
+	while(fallo&&aux!=raiz){
+		aux->setRevision(0);
+		aux = aux->getPadre();
+	}
 	raiz->setRevision(0);
+	
 	//regresar nodo no balanceado
 }
 
+/*	Actualizar el nodo raíz del subárbol con los valores de la altura del suárbol izquierdo
+	y derecho */
 Nodo* Arbol::notificarNodoPadre(Nodo *n,int altura){
-	n->setRevision(0);
 	if(n->getTipo()==1){
 		// mandar altura del subárbol izquierdo al nodo raiz
 		n->getPadre()->setAlturaIzq(altura);

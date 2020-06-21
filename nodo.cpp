@@ -12,6 +12,8 @@ Nodo::Nodo(){
 	padre = NULL;
 	revision = 0;
 	tipo = 0;
+	alturaIzq = 0;
+	alturaDer = 0;
 }
 
 Nodo::Nodo(int dato,int type){
@@ -21,6 +23,8 @@ Nodo::Nodo(int dato,int type){
 	padre = NULL;
 	revision = 0;
 	tipo = type;
+	alturaIzq = 0;
+	alturaDer = 0;
 }
 
 Nodo::Nodo(int dato){
@@ -30,6 +34,8 @@ Nodo::Nodo(int dato){
 	padre = NULL;
 	revision = 0;
 	tipo = 0;
+	alturaIzq = 0;
+	alturaDer = 0;
 }
 
 // Setters
