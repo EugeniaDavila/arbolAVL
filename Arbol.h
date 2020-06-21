@@ -28,6 +28,7 @@ class Arbol{
 		void mostrarArbol(struct Nodo *raiz);
 		void calcularEquilibrio();
 		Nodo* notificarNodoPadre(Nodo *n,int altura);
+		void balancear(Nodo *n);
 };
 
 #endif

@@ -370,7 +370,8 @@ Nodo* Arbol::buscarMayorIzq(Nodo *n){
 	Para un nodo T del árbol la altura de los subárboles izquierdo y derecho no deben
 	diferir en más de una unidad.
 */
-void Arbol::calcularEquilibrio(){
+
+Nodo* Arbol::calcularEquilibrio(){
 	Nodo *nodo = raiz;
 	bool fallo = false;
 	int altura;
@@ -430,8 +431,8 @@ void Arbol::calcularEquilibrio(){
 		aux = aux->getPadre();
 	}
 	raiz->setRevision(0);
-	
 	//regresar nodo no balanceado
+	return nodo;
 }
 
 /*	Actualizar el nodo raíz del subárbol con los valores de la altura del suárbol izquierdo
@@ -445,4 +446,29 @@ Nodo* Arbol::notificarNodoPadre(Nodo *n,int altura){
 		n->getPadre()->setAlturaDer(altura);
 	}
 	return n->getPadre();
+}
+
+void Arbol::balancear(Nodo *n){
+	int tipo; // tipo de equilibrio a hacer
+	Nodo *nodo1 = n;
+	Nodo *nodo2, *nodo3;
+	if(nodo1->getIzq()!=NULL){
+		nodo2 = n->getIzq();
+		if(nodo2->getIzq()!=NULL){
+			tipo = 1;
+			nodo3 = nodo2->getIzq(); // Izq-Izq
+		}else{
+			tipo = 2;
+			nodo3 = nodo2->getDer(); // Izq-Der
+		}
+	}else{
+		nodo2 = n->getDer();
+		if(nodo2->getIzq()!=NULL){
+			tipo = 3;
+			nodo3 = nodo2->getIzq(); // Der-Izq
+		}else{
+			tipo = 4;
+			nodo3 = nodo2->getDer(); // Der-Der
+		}
+	}
 }

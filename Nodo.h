@@ -9,8 +9,8 @@ class Nodo{
 		Nodo *izq; // enlace al hijo izquierdo
 		Nodo *der; // enlace al hijo derecho
 		Nodo *padre; // enlace al padre del nodo
-		int alturaIzq;
-		int alturaDer;
+		int alturaIzq;  // altura del subarbol izquierdo
+		int alturaDer; // altura del subarbol derecho
 		
 	public:
 		// Constructores
