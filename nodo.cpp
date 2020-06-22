@@ -14,6 +14,7 @@ Nodo::Nodo(){
 	tipo = 0;
 	alturaIzq = 0;
 	alturaDer = 0;
+	fe = 0;
 }
 
 Nodo::Nodo(int dato,int type){
@@ -25,6 +26,7 @@ Nodo::Nodo(int dato,int type){
 	tipo = type;
 	alturaIzq = 0;
 	alturaDer = 0;
+	fe = 0;
 }
 
 Nodo::Nodo(int dato){
@@ -36,6 +38,7 @@ Nodo::Nodo(int dato){
 	tipo = 0;
 	alturaIzq = 0;
 	alturaDer = 0;
+	fe = 0;
 }
 
 // Setters
@@ -71,6 +74,10 @@ void Nodo::setAlturaDer(int d){
 	alturaDer = d;
 }
 
+void Nodo::setEquilibrio(int e){
+	fe = e;
+}
+
 // Getters
 int Nodo::getInfo(){
 	return info;
@@ -103,3 +110,7 @@ int Nodo::getAlturaIzq(){
 int Nodo::getAlturaDer(){
 	return alturaDer;
 }		
+
+int Nodo::getEquilibrio(){
+	return fe;
+}

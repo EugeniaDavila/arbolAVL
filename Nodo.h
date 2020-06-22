@@ -11,6 +11,7 @@ class Nodo{
 		Nodo *padre; // enlace al padre del nodo
 		int alturaIzq;  // altura del subarbol izquierdo
 		int alturaDer; // altura del subarbol derecho
+		int fe; // factor de equilibrio (altura derecha - altura izquierda)
 		
 	public:
 		// Constructores
@@ -27,6 +28,7 @@ class Nodo{
 		void setPadre(Nodo *p);
 		void setAlturaIzq(int i);
 		void setAlturaDer(int d);
+		void setEquilibrio(int e);
 		
 		// Métodos get()
 		int getInfo();
@@ -36,7 +38,8 @@ class Nodo{
 		Nodo* getIzq();
 		Nodo* getPadre();
 		int getAlturaIzq();
-		int getAlturaDer();			
+		int getAlturaDer();	
+		int getEquilibrio();	
 };
 
 #endif

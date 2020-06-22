@@ -403,8 +403,9 @@ Nodo* Arbol::calcularEquilibrio(){
 				// calcula el factor de equilibrio del nodo
 				cout<<"2: "<<nodo->getInfo()<<endl;
 				cout<<nodo->getAlturaIzq()<<"-"<<nodo->getAlturaDer()<<endl;
-				cout<<"equilibrio: "<<abs(nodo->getAlturaIzq()-nodo->getAlturaDer())<<endl;
-				if(abs(nodo->getAlturaIzq()-nodo->getAlturaDer())>1){
+				cout<<"equilibrio: "<<abs(nodo->getAlturaDer()-nodo->getAlturaIzq())<<endl;
+				nodo->setEquilibrio(nodo->getAlturaDer()-nodo->getAlturaIzq());
+				if(abs(nodo->getEquilibrio())>1){
 					fallo = true;
 					cout<<"El arbol no esta equilibrado..."<<endl;
 					cout<<"Nodo: "<<nodo->getInfo()<<endl;
@@ -436,7 +437,8 @@ Nodo* Arbol::calcularEquilibrio(){
 }
 
 /*	Actualizar el nodo raíz del subárbol con los valores de la altura del suárbol izquierdo
-	y derecho */
+	y derecho 
+*/
 Nodo* Arbol::notificarNodoPadre(Nodo *n,int altura){
 	if(n->getTipo()==1){
 		// mandar altura del subárbol izquierdo al nodo raiz
@@ -448,11 +450,11 @@ Nodo* Arbol::notificarNodoPadre(Nodo *n,int altura){
 	return n->getPadre();
 }
 
-void Arbol::balancear(Nodo *n){
+void Arbol::restructurar(Nodo *n){
 	int tipo; // tipo de equilibrio a hacer
 	Nodo *nodo1 = n;
 	Nodo *nodo2, *nodo3;
-	if(nodo1->getIzq()!=NULL){
+	/*if(nodo1->getIzq()!=NULL){
 		nodo2 = n->getIzq();
 		if(nodo2->getIzq()!=NULL){
 			tipo = 1;
@@ -464,6 +466,25 @@ void Arbol::balancear(Nodo *n){
 	}else{
 		nodo2 = n->getDer();
 		if(nodo2->getIzq()!=NULL){
+			tipo = 3;
+			nodo3 = nodo2->getIzq(); // Der-Izq
+		}else{
+			tipo = 4;
+			nodo3 = nodo2->getDer(); // Der-Der
+		}
+	}*/
+	if(nodo1->getEquilibrio()<0){
+		nodo2 = n->getIzq();
+		if(nodo2->getEquilibrio()<0){
+			tipo = 1;
+			nodo3 = nodo2->getIzq(); // Izq-Izq
+		}else{
+			tipo = 2;
+			nodo3 = nodo2->getDer(); // Izq-Der
+		}
+	}else {
+		nodo2 = n->getDer();
+		if(nodo2->getEquilibrio()<0){
 			tipo = 3;
 			nodo3 = nodo2->getIzq(); // Der-Izq
 		}else{
