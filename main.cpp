@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
 				}
 			break;
 			case 4:
-				a.calcularEquilibrio();
+	
 			break;
 			case 5:
 				a.preorden();

@@ -43,6 +43,7 @@ Nodo* Arbol::insertarNodo(int dato){
 	bool doble = false; // toma el valor true cuando se intenta ingresar un dato que ya está en el árbol
 	Nodo *nuevo = new Nodo(dato);
 	Nodo *nodo; // apuntador que va recorriendo el árbol
+	Nodo *nodoAux; // auxiliar para el balanceo de árboles
 	if(raiz == NULL){
 		cout<<"\n\tEl nodo se insert\xa2 como ra\xa1z del \xa0rbol..."<<endl;
 		raiz = nuevo;
@@ -78,6 +79,11 @@ Nodo* Arbol::insertarNodo(int dato){
 				}				
 			}
 		}
+	}
+	nodoAux = calcularEquilibrio();
+	if(nodoAux!=NULL){
+		cout<<"\n\tRestructurando..."<<endl;
+		restructurar(nodoAux);
 	}
 	return raiz;
 }
@@ -372,6 +378,7 @@ Nodo* Arbol::buscarMayorIzq(Nodo *n){
 */
 
 Nodo* Arbol::calcularEquilibrio(){
+	cout<<"\n\tCalculando equilibrio..."<<endl;
 	Nodo *nodo = raiz;
 	bool fallo = false;
 	int altura;
@@ -420,6 +427,7 @@ Nodo* Arbol::calcularEquilibrio(){
 						nodo->setRevision(0);
 						nodo = notificarNodoPadre(nodo,altura);
 					}
+					nodo =  NULL;
 				}
 				system("pause");
 			break;
@@ -454,25 +462,6 @@ void Arbol::restructurar(Nodo *n){
 	int tipo; // tipo de equilibrio a hacer
 	Nodo *nodo1 = n;
 	Nodo *nodo2, *nodo3;
-	/*if(nodo1->getIzq()!=NULL){
-		nodo2 = n->getIzq();
-		if(nodo2->getIzq()!=NULL){
-			tipo = 1;
-			nodo3 = nodo2->getIzq(); // Izq-Izq
-		}else{
-			tipo = 2;
-			nodo3 = nodo2->getDer(); // Izq-Der
-		}
-	}else{
-		nodo2 = n->getDer();
-		if(nodo2->getIzq()!=NULL){
-			tipo = 3;
-			nodo3 = nodo2->getIzq(); // Der-Izq
-		}else{
-			tipo = 4;
-			nodo3 = nodo2->getDer(); // Der-Der
-		}
-	}*/
 	if(nodo1->getEquilibrio()<0){
 		nodo2 = n->getIzq();
 		if(nodo2->getEquilibrio()<0){
@@ -482,7 +471,7 @@ void Arbol::restructurar(Nodo *n){
 			tipo = 2;
 			nodo3 = nodo2->getDer(); // Izq-Der
 		}
-	}else {
+	}else{
 		nodo2 = n->getDer();
 		if(nodo2->getEquilibrio()<0){
 			tipo = 3;
@@ -491,5 +480,30 @@ void Arbol::restructurar(Nodo *n){
 			tipo = 4;
 			nodo3 = nodo2->getDer(); // Der-Der
 		}
+	}
+	switch(tipo){
+		case 1:
+			cout<<"II"<<endl;
+			if(nodo1==raiz){
+				raiz = nodo2;
+				nodo2->setTipo(0);
+				nodo2->setPadre(NULL);
+			}else{
+				nodo2->setPadre(nodo1->getPadre());
+				nodo2->setTipo(nodo1->getTipo());
+			}
+			nodo1->setPadre(nodo2);
+			if(nodo2->getDer()!=NULL){
+				nodo1->setIzq(nodo2->getDer());
+				nodo1->getIzq()->setTipo(1);
+			}
+			nodo1->setTipo(2);
+		break;
+		case 2:
+		break;
+		case 3:
+		break;
+		case 4:
+		break; 
 	}
 }
