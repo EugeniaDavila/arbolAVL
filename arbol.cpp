@@ -427,7 +427,6 @@ Nodo* Arbol::calcularEquilibrio(){
 						nodo->setRevision(0);
 						nodo = notificarNodoPadre(nodo,altura);
 					}
-					nodo =  NULL;
 				}
 				system("pause");
 			break;
@@ -438,6 +437,9 @@ Nodo* Arbol::calcularEquilibrio(){
 	while(fallo&&aux!=raiz){
 		aux->setRevision(0);
 		aux = aux->getPadre();
+	}
+	if(!fallo){
+		nodo = NULL;
 	}
 	raiz->setRevision(0);
 	//regresar nodo no balanceado
@@ -450,11 +452,14 @@ Nodo* Arbol::calcularEquilibrio(){
 Nodo* Arbol::notificarNodoPadre(Nodo *n,int altura){
 	if(n->getTipo()==1){
 		// mandar altura del subárbol izquierdo al nodo raiz
+		cout<<"notificando izquierdo"<<endl;
 		n->getPadre()->setAlturaIzq(altura);
 	}else if(n->getTipo()==2){
 		// mandar altura del subárbol derecho al nodo raiz
+		cout<<"notificando derecho"<<endl;
 		n->getPadre()->setAlturaDer(altura);
 	}
+	cout<<"notificacion terminada"<<endl;
 	return n->getPadre();
 }
 
@@ -481,6 +486,9 @@ void Arbol::restructurar(Nodo *n){
 			nodo3 = nodo2->getDer(); // Der-Der
 		}
 	}
+	cout<<"nodo1: "<<nodo1->getInfo()<<endl;
+	cout<<"nodo2: "<<nodo2->getInfo()<<endl;
+	cout<<"nodo3: "<<nodo3->getInfo()<<endl;
 	switch(tipo){
 		case 1:
 			cout<<"II"<<endl;
@@ -497,6 +505,7 @@ void Arbol::restructurar(Nodo *n){
 				nodo1->setIzq(nodo2->getDer());
 				nodo1->getIzq()->setTipo(1);
 			}
+			nodo2->setDer(nodo1);
 			nodo1->setTipo(2);
 		break;
 		case 2:
