@@ -541,9 +541,14 @@ void Arbol::restructurar(Nodo *n){
 				nodo2->setTipo(0);
 				nodo2->setPadre(NULL);
 			}else{
-				nodo2->setPadre(nodo1->getPadre());
+				aux = nodo1->getPadre();
+				nodo2->setPadre(aux);
 				nodo2->setTipo(nodo1->getTipo());
-				nodo1->getPadre()->setDer(nodo1->getDer());
+				if(nodo1->getTipo()==1){
+					aux->setIzq(nodo2);
+				}else if(nodo1->getTipo()==2){
+					aux->setDer(nodo2);
+				}
 			}
 			nodo1->setPadre(nodo2);
 			if(nodo2->getIzq()!=NULL){
