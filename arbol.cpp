@@ -400,7 +400,7 @@ Nodo* Arbol::calcularEquilibrio(){
 				}else{
 					nodo->setAlturaIzq(0);
 				}
-				system("pause");
+				//system("pause");
 			break;
 			case 1:
 				// revisa si el nodo tiene hijo derecho
@@ -411,7 +411,7 @@ Nodo* Arbol::calcularEquilibrio(){
 				}else{
 					nodo->setAlturaDer(0);
 				}
-				system("pause");
+				//system("pause");
 			break;
 			case 2:
 				// calcula el factor de equilibrio del nodo
@@ -435,7 +435,7 @@ Nodo* Arbol::calcularEquilibrio(){
 						nodo = notificarNodoPadre(nodo,altura);
 					}
 				}
-				system("pause");
+				//system("pause");
 			break;
 		}
 	}
@@ -459,14 +459,11 @@ Nodo* Arbol::calcularEquilibrio(){
 Nodo* Arbol::notificarNodoPadre(Nodo *n,int altura){
 	if(n->getTipo()==1){
 		// mandar altura del subárbol izquierdo al nodo raiz
-		cout<<"notificando izquierdo"<<endl;
 		n->getPadre()->setAlturaIzq(altura);
 	}else if(n->getTipo()==2){
 		// mandar altura del subárbol derecho al nodo raiz
-		cout<<"notificando derecho"<<endl;
 		n->getPadre()->setAlturaDer(altura);
 	}
-	cout<<"notificacion terminada"<<endl;
 	return n->getPadre();
 }
 
@@ -474,9 +471,9 @@ void Arbol::restructurar(Nodo *n){
 	int tipo; // tipo de equilibrio a hacer
 	Nodo *nodo1 = n;
 	Nodo *nodo2, *nodo3;
-	if(nodo1->getEquilibrio()<0){
+	if(nodo1->getEquilibrio()<=0){
 		nodo2 = n->getIzq();
-		if(nodo2->getEquilibrio()<0){
+		if(nodo2->getEquilibrio()<=0){
 			tipo = 1;
 			nodo3 = nodo2->getIzq(); // Izq-Izq
 		}else{
@@ -485,7 +482,7 @@ void Arbol::restructurar(Nodo *n){
 		}
 	}else{
 		nodo2 = n->getDer();
-		if(nodo2->getEquilibrio()<0){
+		if(nodo2->getEquilibrio()<=0){
 			tipo = 3;
 			nodo3 = nodo2->getIzq(); // Der-Izq
 		}else{
@@ -493,12 +490,6 @@ void Arbol::restructurar(Nodo *n){
 			nodo3 = nodo2->getDer(); // Der-Der
 		}
 	}
-	cout<<"nodo1: "<<nodo1->getInfo()<<endl;
-	cout<<"nodo1: "<<nodo1->getRevision()<<endl;
-	cout<<"nodo2: "<<nodo2->getInfo()<<endl;
-	cout<<"nodo1: "<<nodo2->getRevision()<<endl;
-	cout<<"nodo3: "<<nodo3->getInfo()<<endl;
-	cout<<"nodo1: "<<nodo3->getRevision()<<endl;
 	switch(tipo){
 		case 1:
 			cout<<"II"<<endl;
@@ -509,6 +500,7 @@ void Arbol::restructurar(Nodo *n){
 			}else{
 				nodo2->setPadre(nodo1->getPadre());
 				nodo2->setTipo(nodo1->getTipo());
+				nodo1->getPadre()->setIzq(nodo1->getIzq());
 			}
 			nodo1->setPadre(nodo2);
 			if(nodo2->getDer()!=NULL){
@@ -522,8 +514,19 @@ void Arbol::restructurar(Nodo *n){
 			cout<<"nodo2->der"<<nodo2->getDer()->getInfo()<<endl;
 		break;
 		case 2:
+			cout<<"ID"<<endl;
 		break;
 		case 3:
+			cout<<"DI"<<endl;
+			if(nodo1==raiz){
+				raiz = nodo3;
+				nodo3->setTipo(0);
+				nodo3->setPadre(NULL);
+			}else{
+				nodo3->setPadre(nodo1->getPadre);
+				nodo3->getTipo(nodo1->getTipo());
+			}
+			
 		break;
 		case 4:
 			cout<<"DD"<<endl;
