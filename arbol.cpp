@@ -490,6 +490,7 @@ void Arbol::restructurar(Nodo *n){
 			nodo3 = nodo2->getDer(); // Der-Der
 		}
 	}
+	Nodo *aux; // apuntador auxiliar para hacer el intercambio entre nodos
 	switch(tipo){
 		case 1:
 			cout<<"II"<<endl;
@@ -498,9 +499,14 @@ void Arbol::restructurar(Nodo *n){
 				nodo2->setTipo(0);
 				nodo2->setPadre(NULL);
 			}else{
-				nodo2->setPadre(nodo1->getPadre());
+				aux = nodo1->getPadre();
+				nodo2->setPadre(aux);
 				nodo2->setTipo(nodo1->getTipo());
-				nodo1->getPadre()->setIzq(nodo1->getIzq());
+				if(nodo1->getTipo()==1){
+					aux->setIzq(nodo2);
+				}else{
+					aux->setDer(nodo2);
+				}
 			}
 			nodo1->setPadre(nodo2);
 			if(nodo2->getDer()!=NULL){
