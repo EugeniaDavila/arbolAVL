@@ -526,6 +526,24 @@ void Arbol::restructurar(Nodo *n){
 		case 3:
 		break;
 		case 4:
+			cout<<"DD"<<endl;
+			if(nodo1==raiz){
+				raiz = nodo2;
+				nodo2->setTipo(0);
+				nodo2->setPadre(NULL);
+			}else{
+				nodo2->setPadre(nodo1->getPadre());
+				nodo2->setTipo(nodo1->getTipo());
+			}
+			nodo1->setPadre(nodo2);
+			if(nodo2->getIzq()!=NULL){
+				nodo1->setDer(nodo2->getIzq());
+				nodo1->getDer()->setTipo(2);
+			}else{
+				nodo1->setDer(NULL);
+			}
+			nodo2->setIzq(nodo1);
+			nodo1->setTipo(1);
 		break; 
 	}
 }
