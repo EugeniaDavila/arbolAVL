@@ -521,6 +521,34 @@ void Arbol::restructurar(Nodo *n){
 		break;
 		case 2:
 			cout<<"ID"<<endl;
+			if(nodo1==raiz){
+				raiz = nodo3;
+				nodo3->setTipo(0);
+				nodo3->setPadre(NULL);
+			}else{
+				aux = nodo1->getPadre();
+				nodo3->setPadre(aux);
+				nodo3->setTipo(nodo1->getTipo());
+				if(nodo1->getTipo()==1){
+					aux->setIzq(nodo3);
+				}else{
+					aux->setDer(nodo3);
+				}
+			}
+			if(nodo3->getDer()!=NULL){
+				nodo1->setIzq(nodo3->getDer());
+			}else{
+				nodo1->setIzq(NULL);
+			}
+			if(nodo3->getIzq()!=NULL){
+				nodo2->setDer(nodo3->getIzq());
+			}else{
+				nodo2->setDer(NULL);
+			}
+			nodo1->setPadre(nodo3);
+			nodo2->setPadre(nodo3);
+			nodo3->setIzq(nodo2);
+			nodo3->setDer(nodo1);
 		break;
 		case 3:
 			cout<<"DI"<<endl;
@@ -529,10 +557,30 @@ void Arbol::restructurar(Nodo *n){
 				nodo3->setTipo(0);
 				nodo3->setPadre(NULL);
 			}else{
-				nodo3->setPadre(nodo1->getPadre);
-				nodo3->getTipo(nodo1->getTipo());
+				aux = nodo1->getPadre();
+				nodo3->setPadre(aux);
+				nodo3->setTipo(nodo1->getTipo());
+				if(nodo1->getTipo()==1){
+					aux->setIzq(nodo3);
+				}else{
+					aux->setDer(nodo3);
+				}
 			}
 			
+			if(nodo3->getDer()!=NULL){
+				nodo2->setIzq(nodo3->getDer());
+			}else{
+				nodo2->setIzq(NULL);
+			}
+			if(nodo3->getIzq()!=NULL){
+				nodo1->setDer(nodo3->getIzq());
+			}else{
+				nodo1->setDer(NULL);
+			}
+			nodo1->setPadre(nodo3);
+			nodo2->setPadre(nodo3);
+			nodo3->setIzq(nodo1);
+			nodo3->setDer(nodo2);
 		break;
 		case 4:
 			cout<<"DD"<<endl;
