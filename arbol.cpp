@@ -168,17 +168,18 @@ void Arbol::preorden(){
 			indicando que ya se han analizado ambos lados de ese subárbol
 */
 void Arbol::inorden(){
-	cout<<"\n\tInorden: ";
+	cout<<"\n\tInorden: "<<endl;
 	bool terminado = false;
 	Nodo *nodo = raiz; // apuntar a la raíz del árbol sin perder la referencia original
 	while(!terminado){
-		//cout<<"nodo actual "<<nodo->getInfo()<<endl;
-		//cout<<"revision "<<nodo->getRevision()<<endl;
+		cout<<"nodo actual "<<nodo->getInfo()<<endl;
+		cout<<"revision "<<nodo->getRevision()<<endl;
+		system("pause");
 		switch(nodo->getRevision()){
 			case 0:
 				nodo->setRevision(2);
 				if(nodo->getIzq()==NULL){
-					cout<<nodo->getInfo()<<" ";
+					cout<<nodo->getInfo()<<" ------";
 				}else{
 					nodo = nodo->getIzq();
 				}
@@ -190,7 +191,7 @@ void Arbol::inorden(){
 				}else if(nodo->getTipo()==1){
 					nodo->setRevision(0);
 					nodo = nodo->getPadre();
-					cout<<nodo->getInfo()<<" ";
+					cout<<nodo->getInfo()<<" -----";
 					nodo->setRevision(2);
 				}else{
 					nodo->setRevision(0);
@@ -200,13 +201,13 @@ void Arbol::inorden(){
 			break;
 			case 2:
 				nodo->setRevision(0);
-				//cout<<"Estado 2: "<<nodo->getTipo()<<endl;
-				//system("pause");
+				cout<<"Estado 2: "<<nodo->getTipo()<<endl;
+				system("pause");
 				if(nodo->getDer()==NULL){
-					//cout<<"Entra"<<endl;
+					cout<<"Entra"<<endl;
 					if(nodo->getTipo()==1){
 						nodo = nodo->getPadre();
-						cout<<nodo->getInfo()<<" ";
+						cout<<nodo->getInfo()<<" ------";
 						nodo->setRevision(2);
 					}else if(nodo->getTipo()==0){
 						terminado = true;
@@ -216,9 +217,9 @@ void Arbol::inorden(){
 						nodo->setRevision(1);
 					}
 				}else{
-					//cout<<"Avanza al derecho";
+					cout<<"Avanza al derecho";
 					nodo = nodo->getDer();
-					//cout<<nodo->getInfo()<<endl;
+					cout<<nodo->getInfo()<<endl;
 				}
 			break;
 		}
@@ -517,7 +518,6 @@ void Arbol::restructurar(Nodo *n){
 			}
 			nodo2->setDer(nodo1);
 			nodo1->setTipo(2);
-			cout<<"nodo2->der"<<nodo2->getDer()->getInfo()<<endl;
 		break;
 		case 2:
 			cout<<"ID"<<endl;
@@ -546,6 +546,7 @@ void Arbol::restructurar(Nodo *n){
 				nodo2->setDer(NULL);
 			}
 			nodo1->setPadre(nodo3);
+			nodo1->setTipo(2);
 			nodo2->setPadre(nodo3);
 			nodo3->setIzq(nodo2);
 			nodo3->setDer(nodo1);
@@ -578,9 +579,22 @@ void Arbol::restructurar(Nodo *n){
 				nodo1->setDer(NULL);
 			}
 			nodo1->setPadre(nodo3);
+			nodo1->setTipo(1);
 			nodo2->setPadre(nodo3);
 			nodo3->setIzq(nodo1);
 			nodo3->setDer(nodo2);
+			
+			cout<<"nodo1->padre"<<nodo1->getPadre()->getInfo()<<endl;
+			cout<<"nodo2->padre"<<nodo2->getPadre()->getInfo()<<endl;
+			//cout<<"nodo3->padre"<<nodo3->getPadre()->getInfo()<<endl; null
+			cout<<"nodo3->der"<<nodo3->getDer()->getInfo()<<endl;
+			cout<<"nodo3->izq"<<nodo3->getIzq()->getInfo()<<endl;
+			//////
+
+			//cout<<"nodo2->der"<<nodo2->getDer()->getInfo()<<endl;
+			//cout<<"nodo2->izq"<<nodo2->getIzq()->getInfo()<<endl;
+			
+			system("pause");
 		break;
 		case 4:
 			cout<<"DD"<<endl;
