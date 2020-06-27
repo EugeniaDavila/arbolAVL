@@ -25,10 +25,10 @@ class Arbol{
 		void postorden();
 		Nodo* buscarNodo(int n);
 		Nodo* buscarMayorIzq(Nodo *n);
-		void mostrarArbol(struct Nodo *raiz);
 		Nodo* calcularEquilibrio();
 		Nodo* notificarNodoPadre(Nodo *n,int altura);
 		void restructurar(Nodo *n);
+		void mostrarArbol();
 };
 
 #endif

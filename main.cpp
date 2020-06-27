@@ -48,7 +48,11 @@ int main(int argc, char** argv) {
 				}
 			break;
 			case 4:
-	
+				if(a.getRaiz()!=NULL){
+					a.mostrarArbol();
+				}else{
+					cout<<"\n\tEl \xa0rbol est\xa0 vac\xa1o"<<endl;
+				}
 			break;
 			case 5:
 				a.preorden();

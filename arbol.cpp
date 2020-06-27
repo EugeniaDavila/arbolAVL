@@ -384,7 +384,6 @@ Nodo* Arbol::buscarMayorIzq(Nodo *n){
 	Para un nodo T del árbol la altura de los subárboles izquierdo y derecho no deben
 	diferir en más de una unidad.
 */
-
 Nodo* Arbol::calcularEquilibrio(){
 	cout<<"\n\tCalculando equilibrio..."<<endl;
 	Nodo *nodo = raiz;
@@ -401,7 +400,6 @@ Nodo* Arbol::calcularEquilibrio(){
 				}else{
 					nodo->setAlturaIzq(0);
 				}
-				//system("pause");
 			break;
 			case 1:
 				// revisa si el nodo tiene hijo derecho
@@ -412,7 +410,6 @@ Nodo* Arbol::calcularEquilibrio(){
 				}else{
 					nodo->setAlturaDer(0);
 				}
-				//system("pause");
 			break;
 			case 2:
 				// calcula el factor de equilibrio del nodo
@@ -468,6 +465,10 @@ Nodo* Arbol::notificarNodoPadre(Nodo *n,int altura){
 	return n->getPadre();
 }
 
+/*	Hacer el intercambio entre el nodo desequilibrado y sus nodos
+	hijos de acuerdo a las reglas de intercambio de árboles binarios
+	y según el tipo de desequilibrio.
+*/
 void Arbol::restructurar(Nodo *n){
 	int tipo; // tipo de equilibrio a hacer
 	Nodo *nodo1 = n;
@@ -553,6 +554,23 @@ void Arbol::restructurar(Nodo *n){
 		break;
 		case 3:
 			cout<<"DI"<<endl;
+			// si el nodo 3 tiene hijo derecho, ese hijo se convierte en hijo izquierdo de nodo2
+			if(nodo3->getDer()!=NULL){
+				nodo2->setIzq(nodo3->getDer());
+				nodo3->getDer()->setPadre(nodo2);
+				nodo3->getDer()->setTipo(1);
+			}else{
+				nodo2->setIzq(NULL);
+			}
+			// si el nodo 3 tiene hijo izquierdo, ese hijo se convierte en hijo derecho de nodo1
+			if(nodo3->getIzq()!=NULL){
+				nodo1->setDer(nodo3->getIzq());
+				nodo3->getIzq()->setPadre(nodo2);
+				nodo1->getDer()->setTipo(2);
+			}else{
+				nodo1->setDer(NULL);
+			}
+			// verificar si el nodo1 corresponde a la raíz del árbol
 			if(nodo1==raiz){
 				raiz = nodo3;
 				nodo3->setTipo(0);
@@ -567,21 +585,11 @@ void Arbol::restructurar(Nodo *n){
 					aux->setDer(nodo3);
 				}
 			}
-			
-			if(nodo3->getDer()!=NULL){
-				nodo2->setIzq(nodo3->getDer());
-			}else{
-				nodo2->setIzq(NULL);
-			}
-			if(nodo3->getIzq()!=NULL){
-				nodo1->setDer(nodo3->getIzq());
-			}else{
-				nodo1->setDer(NULL);
-			}
 			nodo1->setPadre(nodo3);
-			nodo1->setTipo(1);
-			nodo2->setPadre(nodo3);
 			nodo3->setIzq(nodo1);
+			nodo1->setTipo(1);
+			
+			nodo2->setPadre(nodo3);
 			nodo3->setDer(nodo2);
 			
 			cout<<"nodo1->padre"<<nodo1->getPadre()->getInfo()<<endl;
@@ -589,11 +597,9 @@ void Arbol::restructurar(Nodo *n){
 			//cout<<"nodo3->padre"<<nodo3->getPadre()->getInfo()<<endl; null
 			cout<<"nodo3->der"<<nodo3->getDer()->getInfo()<<endl;
 			cout<<"nodo3->izq"<<nodo3->getIzq()->getInfo()<<endl;
-			//////
 
 			//cout<<"nodo2->der"<<nodo2->getDer()->getInfo()<<endl;
 			//cout<<"nodo2->izq"<<nodo2->getIzq()->getInfo()<<endl;
-			
 			system("pause");
 		break;
 		case 4:
@@ -623,4 +629,75 @@ void Arbol::restructurar(Nodo *n){
 			nodo1->setTipo(1);
 		break; 
 	}
+}
+
+/* Mostrar un representación del árbol en pantalla*/
+void Arbol::mostrarArbol(){
+	Nodo *nodo = raiz; // hacer que la variable nodo apunte a la raíz del árbol, para no perder la referencia
+	int nivel = 0; // usada para la indentación de los nodos
+	while(raiz->getRevision()<3){
+		switch(nodo->getRevision()){
+			case 0:
+				nodo->setRevision(1);
+				/*
+				for(int i=1;i<=nivel;i++){
+					//cout<<"\xb0\xb0\xb0";
+					if(nivel>=2){
+						cout<<"\xdb\xdb\xdb|";
+					}else{
+						cout<<"\xdb\xdb\xdb";
+					}
+				}
+				if(nivel>=2){
+					cout<<"\xdb\xdb\xdb";
+				}*/
+				if(nivel>0){
+					cout<<"\xb0\xb0\xb0";
+					for(int i=1;i<nivel;i++){
+						cout<<"|\xdb\xdb";
+					}
+				}
+				// Imprimir los símbolos que aparecen junto a la información del nodo
+				if(nodo->getTipo()==0||nodo->getTipo()==2){
+					cout<<"\xc0";
+				}else{
+					cout<<"\xc3";
+				}
+				cout<<"\xc4 "<<nodo->getInfo()<<endl;
+			break;
+			case 1:
+				nodo->setRevision(2);
+				if(nodo->getIzq()!=NULL){
+					nodo = nodo->getIzq();
+					nivel++;
+				}
+			break;
+			case 2:
+				if(nodo->getDer()==NULL){
+					if(nodo->getTipo()==0){
+						nodo->setRevision(3);
+					}else{
+						nodo->setRevision(0);
+						if(nodo->getTipo()==2){
+							nodo->getPadre()->setRevision(3);
+						}
+						nodo = nodo->getPadre();
+						nivel--;
+					}
+				}else{
+					nodo = nodo->getDer();
+					nivel++;
+				}
+			break;
+			case 3:
+				nodo->setRevision(0);
+				if(nodo->getTipo()==2){
+					nodo->getPadre()->setRevision(3);
+				}
+				nodo = nodo->getPadre();	
+				nivel--;		
+			break;
+		}
+	}
+	raiz->setRevision(0);
 }
