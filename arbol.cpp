@@ -524,7 +524,6 @@ void Arbol::restructurar(Nodo *n){
 			nodo1->setPadre(nodo2);
 			nodo1->setTipo(2);
 			nodo2->setDer(nodo1);
-		}
 		break;
 		case 2:
 			cout<<"ID"<<endl;
@@ -625,15 +624,19 @@ void Arbol::restructurar(Nodo *n){
 					aux->setDer(nodo2);
 				}
 			}
-			nodo1->setPadre(nodo2);
+			
+			// si nodo2 tiene un hijo izquierdo, el hijo se convierte en hijo derecho de nodo1
 			if(nodo2->getIzq()!=NULL){
 				nodo1->setDer(nodo2->getIzq());
 				nodo1->getDer()->setTipo(2);
+				nodo1->getDer()->setPadre(nodo1);
 			}else{
 				nodo1->setDer(NULL);
 			}
-			nodo2->setIzq(nodo1);
+			// Convertir nodo1 en hijo izquierdo de nodo2
+			nodo1->setPadre(nodo2);
 			nodo1->setTipo(1);
+			nodo2->setIzq(nodo1);
 		break; 
 	}
 }
