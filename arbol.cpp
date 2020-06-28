@@ -559,7 +559,7 @@ void Arbol::restructurar(Nodo *n){
 		break;
 		case 3:
 			cout<<"DI"<<endl;
-			// verificar si el nodo1 corresponde a la raíz del árbol
+			// verificar si el nodo1 corresponde a la raíz del árbol o es hijo de otro nodo
 			if(nodo1==raiz){
 				raiz = nodo3;
 				nodo3->setTipo(0);
@@ -578,21 +578,22 @@ void Arbol::restructurar(Nodo *n){
 			if(nodo3->getDer()!=NULL){
 				nodo2->setIzq(nodo3->getDer());
 				nodo3->getDer()->setPadre(nodo2);
-				nodo3->getDer()->setTipo(1);
+				nodo2->getIzq()->setTipo(1);
 			}else{
 				nodo2->setIzq(NULL);
 			}
 			// si el nodo3 tiene hijo izquierdo, ese hijo se convierte en hijo derecho de nodo1
 			if(nodo3->getIzq()!=NULL){
 				nodo1->setDer(nodo3->getIzq());
-				nodo3->getIzq()->setPadre(nodo2);
+				nodo3->getIzq()->setPadre(nodo1);
 				nodo1->getDer()->setTipo(2);
 			}else{
 				nodo1->setDer(NULL);
 			}
+			// establecer los nuevos enlaces entre los nodos nodo1 a nodo3
+			nodo1->setTipo(1);
 			nodo1->setPadre(nodo3);
 			nodo3->setIzq(nodo1);
-			nodo1->setTipo(1);
 			
 			nodo2->setPadre(nodo3);
 			nodo3->setDer(nodo2);
@@ -624,7 +625,6 @@ void Arbol::restructurar(Nodo *n){
 					aux->setDer(nodo2);
 				}
 			}
-			
 			// si nodo2 tiene un hijo izquierdo, el hijo se convierte en hijo derecho de nodo1
 			if(nodo2->getIzq()!=NULL){
 				nodo1->setDer(nodo2->getIzq());
