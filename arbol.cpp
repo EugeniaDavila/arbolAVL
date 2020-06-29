@@ -49,8 +49,6 @@ Nodo* Arbol::insertarNodo(int dato){
 					nodo->setIzq(nuevo);
 					nuevo->setTipo(1);
 					cout<<"\n\tDato insertado correctamente..."<<endl;
-					//cout<<"\tNodo padre: "<<nuevo->getPadre()->getInfo()<<endl;
-					//cout<<"\tTipo de hijo: "<<nuevo->getTipo()<<endl;
 				}else{
 					nodo = nodo->getIzq();
 				}
@@ -60,8 +58,6 @@ Nodo* Arbol::insertarNodo(int dato){
 					nodo->setDer(nuevo);
 					nuevo->setTipo(2);
 					cout<<"\n\tDato insertado correctamente..."<<endl;
-					//cout<<"\tNodo padre: "<<nuevo->getPadre()->getInfo()<<endl;
-					//cout<<"\tHijo: "<<nuevo->getTipo()<<endl;
 				}else{
 					nodo = nodo->getDer();
 				}				
@@ -71,7 +67,6 @@ Nodo* Arbol::insertarNodo(int dato){
 	if(!doble){
 		nodoAux = calcularEquilibrio();
 		if(nodoAux!=NULL){
-			//cout<<"\n\tRestructurando..."<<endl;
 			restructurar(nodoAux);
 		}
 	}
@@ -158,18 +153,15 @@ void Arbol::preorden(){
 			indicando que ya se han analizado ambos lados de ese subárbol
 */
 void Arbol::inorden(){
-	cout<<"\n\tInorden: "<<endl;
+	cout<<"\n\tInorden: ";
 	bool terminado = false;
 	Nodo *nodo = raiz; // apuntar a la raíz del árbol sin perder la referencia original
 	while(!terminado){
-		//cout<<"nodo actual "<<nodo->getInfo()<<endl;
-		//cout<<"revision "<<nodo->getRevision()<<endl;
-		//system("pause");
 		switch(nodo->getRevision()){
 			case 0:
 				nodo->setRevision(2);
 				if(nodo->getIzq()==NULL){
-					cout<<nodo->getInfo();
+					cout<<nodo->getInfo()<<" ";
 				}else{
 					nodo = nodo->getIzq();
 				}
@@ -181,7 +173,7 @@ void Arbol::inorden(){
 				}else if(nodo->getTipo()==1){
 					nodo->setRevision(0);
 					nodo = nodo->getPadre();
-					cout<<nodo->getInfo();
+					cout<<nodo->getInfo()<<" ";
 					nodo->setRevision(2);
 				}else{
 					nodo->setRevision(0);
@@ -191,12 +183,10 @@ void Arbol::inorden(){
 			break;
 			case 2:
 				nodo->setRevision(0);
-				//cout<<"Estado 2: "<<nodo->getTipo()<<endl;
-				//system("pause");
 				if(nodo->getDer()==NULL){
 					if(nodo->getTipo()==1){
 						nodo = nodo->getPadre();
-						cout<<nodo->getInfo();
+						cout<<nodo->getInfo()<<" ";
 						nodo->setRevision(2);
 					}else if(nodo->getTipo()==0){
 						terminado = true;
@@ -207,7 +197,6 @@ void Arbol::inorden(){
 					}
 				}else{
 					nodo = nodo->getDer();
-					cout<<nodo->getInfo()<<endl;
 				}
 			break;
 		}
@@ -304,12 +293,10 @@ void Arbol::borrarNodo(int info){
 	Nodo *nodo = buscarNodo(info);
 	Nodo *sustituto, *aux;
 	if(nodo==NULL){
-		//cout<<"\tNo se pudo eliminar el nodo."<<endl;
-		//cout<<"\tEl nodo no est\xa0 en el \xa0rbol..."<<endl;
+		cout<<"\n\tNo se pudo eliminar el nodo."<<endl;
+		cout<<"\n\tEl nodo no est\xa0 en el \xa0rbol..."<<endl;
 	}else{
-		cout<<"Eliminando nodo..."<<endl;
 		if(nodo->getDer()==NULL&nodo->getIzq()==NULL){ // si el nodo no tiene hijos
-			cout<<"El nodo no tiene hijos..."<<endl;
 			if(nodo->getTipo()==1){  // si el nodo es un hijo izquierdo
 				nodo->getPadre()->setIzq(NULL);
 			}else if(nodo->getTipo()==2){ // si el nodo es un hijo derecho
@@ -319,7 +306,6 @@ void Arbol::borrarNodo(int info){
 			}
 		}else if((nodo->getIzq()!=NULL&&nodo->getDer()==NULL)||(nodo->getIzq()==NULL&&nodo->getDer()!=NULL)){ 
 			// si el nodo sólo tiene un hijo
-			cout<<"\tEl nodo tiene un hijo..."<<endl;
 			if(nodo->getIzq()!=NULL){
 				nodo->setInfo(nodo->getIzq()->getInfo());
 				nodo = nodo->getIzq();
@@ -330,13 +316,11 @@ void Arbol::borrarNodo(int info){
 				nodo->getPadre()->setDer(NULL);
 			}		
 		}else{ // el nodo tiene ambos hijos
-			cout<<"\tEl nodo tiene dos hijos..."<<endl;
-			system("pause");
 			// Buscar el nodo mayor del lado izquierdo o el menor del lado derecho
 			// En este caso se utiliza el nodo de mayor valor del subárbol izquierdo
 			sustituto = buscarMayorIzq(nodo);
 			// Reemplazar el nodo encontrado por el que se quiere borrar
-			cout<<"el mayor de la izquierda es: "<<sustituto->getInfo()<<endl;
+			//cout<<"el mayor de la izquierda es: "<<sustituto->getInfo()<<endl;
 			nodo->setInfo(sustituto->getInfo());
 			if(nodo->getIzq()==sustituto){
 				if(sustituto->getIzq()!=NULL){
@@ -356,41 +340,16 @@ void Arbol::borrarNodo(int info){
 				}
 			}
 			nodo = sustituto;
-			/*nodo = sustituto;
-			if(nodo->getIzq()!= NULL){
-				//if(nodo->getPadre()!=NULL){
-					nodo->getIzq()->setPadre(nodo->getPadre());
-				//}				
-				nodo->getPadre()->setDer(nodo->getIzq());
-				nodo->getIzq()->setTipo(nodo->getTipo());
-				nodo->setPadre(NULL);
-				nodo->setIzq(NULL);
-			}else{
-				if(nodo->getTipo()==1){
-					nodo->getPadre()->setIzq(NULL);
-				}else if(nodo->getTipo()==2){
-					nodo->getPadre()->setDer(NULL);
-				}	
-				nodo->setPadre(NULL);			
-			}*/
 		}
 		delete nodo;
 		nodo = NULL;
-		cout<<"se va a calcular el equilibrio"<<endl;
-		system("pause");
 		if(raiz!=NULL){
 			Nodo *nodoAux = calcularEquilibrio();
-			cout<<"equilibrio calculado"<<endl;
-			system("pause");
 			if(nodoAux!=NULL){
-				cout<<"\n\tRestructurando..."<<endl;
 				restructurar(nodoAux);
-			}else{
-				cout<<"no hay restructuracion"<<endl;
 			}
-		}else{
-			cout<<"raiz null"<<endl;
 		}
+		cout<<"Nodo eliminado."<<endl;
 	}
 }
 
@@ -411,18 +370,13 @@ Nodo* Arbol::buscarMayorIzq(Nodo *n){
 	diferir en más de una unidad.
 */
 Nodo* Arbol::calcularEquilibrio(){
-	cout<<"\n\tCalculando equilibrio..."<<endl;
 	Nodo *nodo = raiz;
 	bool fallo = false;
 	int altura;
 	while(raiz->getRevision()<=2&&!fallo){
-		cout<<"nodo: "<<nodo->getInfo()<<endl;
-		cout<<"estado del nodo: "<<nodo->getRevision()<<endl;
-		system("pause");
 		switch(nodo->getRevision()){
 			case 0: 
 				// revisa si el nodo tiene hijo izquierdo
-				cout<<"0: "<<nodo->getInfo()<<endl;
 				nodo->setRevision(1);
 				if(nodo->getIzq()!=NULL){
 					nodo = nodo->getIzq();
@@ -432,7 +386,6 @@ Nodo* Arbol::calcularEquilibrio(){
 			break;
 			case 1:
 				// revisa si el nodo tiene hijo derecho
-				cout<<"1: "<<nodo->getInfo()<<endl;
 				nodo->setRevision(2);
 				if(nodo->getDer()!=NULL){
 					nodo = nodo->getDer();
@@ -442,27 +395,20 @@ Nodo* Arbol::calcularEquilibrio(){
 			break;
 			case 2:
 				// calcula el factor de equilibrio del nodo
-				cout<<"2: "<<nodo->getInfo()<<endl;
-				cout<<nodo->getAlturaIzq()<<"-"<<nodo->getAlturaDer()<<endl;
-				cout<<"equilibrio: "<<abs(nodo->getAlturaDer()-nodo->getAlturaIzq())<<endl;
 				nodo->setEquilibrio(nodo->getAlturaDer()-nodo->getAlturaIzq());
-				if(abs(nodo->getEquilibrio())>1){
+				if(abs(nodo->getEquilibrio())>1){ // El arbol no esta equilibrado
 					fallo = true;
-					cout<<"El arbol no esta equilibrado..."<<endl;
-					cout<<"Nodo: "<<nodo->getInfo()<<endl;
 				}else{
 					// regresar la altura del árbol más grande
 					altura = (nodo->getAlturaIzq()>=nodo->getAlturaDer())?nodo->getAlturaIzq():nodo->getAlturaDer();
 					altura++;
 					if(nodo->getTipo()==0){
-//						cout<<"Nodo raiz equilibrado..."<<endl;
 						raiz->setRevision(3);
 					}else{
 						nodo->setRevision(0);
 						nodo = notificarNodoPadre(nodo,altura);
 					}
 				}
-				//system("pause");
 			break;
 		}
 	}
@@ -524,7 +470,7 @@ void Arbol::restructurar(Nodo *n){
 	Nodo *aux; // apuntador auxiliar para el intercambio de nodos
 	switch(tipo){
 		case 1:
-			cout<<"II"<<endl;
+			//cout<<"II"<<endl;
 			if(nodo1==raiz){
 				raiz = nodo2;
 				nodo2->setTipo(0);
@@ -553,7 +499,7 @@ void Arbol::restructurar(Nodo *n){
 			nodo2->setDer(nodo1);
 		break;
 		case 2:
-			cout<<"ID"<<endl;
+			//cout<<"ID"<<endl;
 			// Determinar los nuevos enlaces para el nodo padre del subárbol
 			if(nodo1==raiz){
 				raiz = nodo3;
@@ -592,11 +538,10 @@ void Arbol::restructurar(Nodo *n){
 			
 			nodo2->setPadre(nodo3);
 			nodo3->setIzq(nodo2);
-			
 		break;
 		case 3:
-			cout<<"DI"<<endl;
 			// verificar si el nodo1 corresponde a la raíz del árbol o es hijo de otro nodo
+			//cout<<"DI"<<endl;
 			if(nodo1==raiz){
 				raiz = nodo3;
 				nodo3->setTipo(0);
@@ -634,20 +579,9 @@ void Arbol::restructurar(Nodo *n){
 			
 			nodo2->setPadre(nodo3);
 			nodo3->setDer(nodo2);
-			
-			cout<<"nodo1->padre"<<nodo1->getPadre()->getInfo()<<endl;
-			cout<<"nodo2->padre"<<nodo2->getPadre()->getInfo()<<endl;
-			//cout<<"nodo3->padre"<<nodo3->getPadre()->getInfo()<<endl; null
-			cout<<"nodo3->der"<<nodo3->getDer()->getInfo()<<endl;
-			cout<<"nodo3->izq"<<nodo3->getIzq()->getInfo()<<endl;
-			cout<<"nodo2->tipo"<<nodo2->getTipo()<<endl;
-
-			//cout<<"nodo2->der"<<nodo2->getDer()->getInfo()<<endl;
-			//cout<<"nodo2->izq"<<nodo2->getIzq()->getInfo()<<endl;
-//			system("pause");
 		break;
 		case 4:
-			cout<<"DD"<<endl;
+			//cout<<"DD"<<endl;
 			if(nodo1==raiz){
 				raiz = nodo2;
 				nodo2->setTipo(0);
@@ -685,37 +619,29 @@ void Arbol::restructurar(Nodo *n){
 	o decrementa la variable nivel.
 */
 void Arbol::mostrarArbol(){
+	cout<<endl;
 	Nodo *nodo = raiz; // hacer que la variable nodo apunte a la raíz del árbol, para no perder la referencia
 	int nivel = 0; // usada para la indentación de los nodos
-	//cout<<"mostrando arbol"<<endl;
-	//system("pause");
 	while(raiz->getRevision()<3){
-		//cout<<"nodo: "<<nodo->getInfo()<<endl;
-		//cout<<"estado del nodo: "<<nodo->getRevision()<<endl;
 		switch(nodo->getRevision()){
 			case 0:
 				nodo->setRevision(1);
+				cout<<"\t";
 				if(nivel>0){
-					cout<<"\xb0\xb0\xb0";
+					cout<<"\xb0\xb0\xb0"; // mostrar desplazamiento
 					for(int i=1;i<nivel;i++){
-						cout<<"|\xdb\xdb";
+						//cout<<"|\xdb\xdb";
+						cout<<"|\xb0\xb0";
 					}
 				}
 				// Imprimir los símbolos que aparecen junto a la información del nodo
-				if(nodo->getTipo()==0||nodo->getTipo()==2){
-					cout<<"\xc0";
-				}else{
-					cout<<"\xc3";
-				}
-				cout<<"\xc4 "<<nodo->getInfo()<<": "<<nivel<<endl;
+				cout<<"\xcc\xcd "<<nodo->getInfo()<<endl;
 			break;
 			case 1:
 				nodo->setRevision(2);
 				if(nodo->getIzq()!=NULL){
 					nodo = nodo->getIzq();
 					nivel++;
-//					cout<<"bajando nivel estado 1"<<endl;
-//					system("pause");
 				}
 			break;
 			case 2:
@@ -729,14 +655,10 @@ void Arbol::mostrarArbol(){
 						}
 						nodo = nodo->getPadre();
 						nivel--;
-//						cout<<"subiendo nivel estado 2"<<endl;
-//						system("pause");
 					}
 				}else{
 					nodo = nodo->getDer();
 					nivel++;
-//					cout<<"bajando nivel estado 2"<<endl;
-//					system("pause");
 				}
 			break;
 			case 3:
@@ -746,11 +668,8 @@ void Arbol::mostrarArbol(){
 				}
 				nodo = nodo->getPadre();	
 				nivel--;	
-//				cout<<"subiendo nivel estado 3"<<endl;
-//				system("pause");
 			break;
 		}
-//		system("pause");
 	}
 	raiz->setRevision(0);
 }

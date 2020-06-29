@@ -24,9 +24,6 @@ int main(int argc, char** argv) {
 			break;
 			case 2:
 				if(a.getRaiz()!=NULL){
-					cout<<"Valor del nodo: "<<a.getRaiz()->getInfo()<<endl;
-					cout<<"Tipo de nodo: "<<a.getRaiz()->getTipo()<<endl;
-					cout<<"Liga izq: "<<a.getRaiz()->getIzq()<<endl;
 					cout<<"\tDato a borrar: ";
 					cin>>info;
 					a.borrarNodo(info);
@@ -83,12 +80,12 @@ int main(int argc, char** argv) {
 
 /* Función que muestra el menú para el usuario*/
 void menu(){
-	cout<<"\n\t\t\t=== ARBOLES BALANCEADOS ==="<<endl<<endl;
+	cout<<"\n\t\t\t=== \xb5RBOLES BALANCEADOS ==="<<endl<<endl;
 	cout<<"\tInsertar nodo.........................................[1]"<<endl;
 	cout<<"\tBorrar nodo...........................................[2]"<<endl;
 	cout<<"\tBuscar nodo...........................................[3]"<<endl;
-	cout<<"\tMostrar arbol.........................................[4]"<<endl;
+	cout<<"\tMostrar \xa0rbol.........................................[4]"<<endl;
 	cout<<"\tMostrar recorridos (inorden, preorden, postorden).....[5]"<<endl;
 	cout<<"\tSalir.................................................[0]"<<endl;
-	cout<<"\n\tSeleccione una opcion: ";
+	cout<<"\n\tSeleccione una opci\xa2n: ";
 }
