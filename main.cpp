@@ -6,6 +6,7 @@ using namespace std;
 
 // prototipos de funciones
 void menu();
+bool esEntero();
 
 int main(int argc, char** argv) {
 	int op; // opción del menú seleccionada por el usuario
@@ -55,9 +56,13 @@ int main(int argc, char** argv) {
 				}
 			break;
 			case 5:
-				a.preorden();
-				a.inorden();
-				a.postorden();
+				if(a.getRaiz()!=NULL){
+					a.preorden();
+					a.inorden();
+					a.postorden();
+				}else{
+					cout<<"\n\tEl \xa0rbol est\xa0 vac\xa1o"<<endl;
+				}
 			break;
 			case 0:
 				cout<<"\n\tSaliendo del programa..."<<endl;

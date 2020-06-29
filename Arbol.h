@@ -4,7 +4,6 @@
 
 class Arbol{
 	private:
-		int altura;
 		Nodo *raiz; // raiz del árbol
 		
 	public:

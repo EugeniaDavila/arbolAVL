@@ -7,19 +7,8 @@ using namespace std;
 
 /* Constructor por defecto */
 Arbol::Arbol(){
-	altura = 0;
 	raiz = NULL;
 }
-
-/* Modificar el valor de la altura del árbol */
-void Arbol::setAltura(int a){
-	altura = a;
-}
-
-/* Obtener la altura del árbol*/
-int Arbol::getAltura(){
-	return altura;
-} 
 
 /* Cambiar el nodo al que apunta la raíz */
 void Arbol::setRaiz(Nodo *r){
@@ -47,7 +36,6 @@ Nodo* Arbol::insertarNodo(int dato){
 	if(raiz == NULL){
 		cout<<"\n\tEl nodo se insert\xa2 como ra\xa1z del \xa0rbol..."<<endl;
 		raiz = nuevo;
-		altura = 1;
 	}else{
 		nodo = raiz;
 		while(!doble && nuevo->getPadre()==NULL){
@@ -61,8 +49,8 @@ Nodo* Arbol::insertarNodo(int dato){
 					nodo->setIzq(nuevo);
 					nuevo->setTipo(1);
 					cout<<"\n\tDato insertado correctamente..."<<endl;
-					cout<<"\tNodo padre: "<<nuevo->getPadre()->getInfo()<<endl;
-					cout<<"\tTipo de hijo: "<<nuevo->getTipo()<<endl;
+					//cout<<"\tNodo padre: "<<nuevo->getPadre()->getInfo()<<endl;
+					//cout<<"\tTipo de hijo: "<<nuevo->getTipo()<<endl;
 				}else{
 					nodo = nodo->getIzq();
 				}
@@ -72,18 +60,20 @@ Nodo* Arbol::insertarNodo(int dato){
 					nodo->setDer(nuevo);
 					nuevo->setTipo(2);
 					cout<<"\n\tDato insertado correctamente..."<<endl;
-					cout<<"\tNodo padre: "<<nuevo->getPadre()->getInfo()<<endl;
-					cout<<"\tHijo: "<<nuevo->getTipo()<<endl;
+					//cout<<"\tNodo padre: "<<nuevo->getPadre()->getInfo()<<endl;
+					//cout<<"\tHijo: "<<nuevo->getTipo()<<endl;
 				}else{
 					nodo = nodo->getDer();
 				}				
 			}
 		}
 	}
-	nodoAux = calcularEquilibrio();
-	if(nodoAux!=NULL&&!doble){
-		cout<<"\n\tRestructurando..."<<endl;
-		restructurar(nodoAux);
+	if(!doble){
+		nodoAux = calcularEquilibrio();
+		if(nodoAux!=NULL){
+			//cout<<"\n\tRestructurando..."<<endl;
+			restructurar(nodoAux);
+		}
 	}
 	return raiz;
 }
@@ -172,14 +162,14 @@ void Arbol::inorden(){
 	bool terminado = false;
 	Nodo *nodo = raiz; // apuntar a la raíz del árbol sin perder la referencia original
 	while(!terminado){
-		cout<<"nodo actual "<<nodo->getInfo()<<endl;
-		cout<<"revision "<<nodo->getRevision()<<endl;
-		system("pause");
+		//cout<<"nodo actual "<<nodo->getInfo()<<endl;
+		//cout<<"revision "<<nodo->getRevision()<<endl;
+		//system("pause");
 		switch(nodo->getRevision()){
 			case 0:
 				nodo->setRevision(2);
 				if(nodo->getIzq()==NULL){
-					cout<<nodo->getInfo()<<" ------";
+					cout<<nodo->getInfo();
 				}else{
 					nodo = nodo->getIzq();
 				}
@@ -191,7 +181,7 @@ void Arbol::inorden(){
 				}else if(nodo->getTipo()==1){
 					nodo->setRevision(0);
 					nodo = nodo->getPadre();
-					cout<<nodo->getInfo()<<" -----";
+					cout<<nodo->getInfo();
 					nodo->setRevision(2);
 				}else{
 					nodo->setRevision(0);
@@ -201,13 +191,12 @@ void Arbol::inorden(){
 			break;
 			case 2:
 				nodo->setRevision(0);
-				cout<<"Estado 2: "<<nodo->getTipo()<<endl;
-				system("pause");
+				//cout<<"Estado 2: "<<nodo->getTipo()<<endl;
+				//system("pause");
 				if(nodo->getDer()==NULL){
-					cout<<"Entra"<<endl;
 					if(nodo->getTipo()==1){
 						nodo = nodo->getPadre();
-						cout<<nodo->getInfo()<<" ------";
+						cout<<nodo->getInfo();
 						nodo->setRevision(2);
 					}else if(nodo->getTipo()==0){
 						terminado = true;
@@ -217,7 +206,6 @@ void Arbol::inorden(){
 						nodo->setRevision(1);
 					}
 				}else{
-					cout<<"Avanza al derecho";
 					nodo = nodo->getDer();
 					cout<<nodo->getInfo()<<endl;
 				}
@@ -314,14 +302,14 @@ Nodo* Arbol::buscarNodo(int n){
 */
 void Arbol::borrarNodo(int info){
 	Nodo *nodo = buscarNodo(info);
-	Nodo *sustituto;
+	Nodo *sustituto, *aux;
 	if(nodo==NULL){
-		cout<<"\tNo se pudo eliminar el nodo."<<endl;
-		cout<<"\tEl nodo no est\xa0 en el \xa0rbol..."<<endl;
+		//cout<<"\tNo se pudo eliminar el nodo."<<endl;
+		//cout<<"\tEl nodo no est\xa0 en el \xa0rbol..."<<endl;
 	}else{
-		cout<<"\tEliminando nodo..."<<endl;
+		cout<<"Eliminando nodo..."<<endl;
 		if(nodo->getDer()==NULL&nodo->getIzq()==NULL){ // si el nodo no tiene hijos
-			cout<<"\tEl nodo no tiene hijos..."<<endl;
+			cout<<"El nodo no tiene hijos..."<<endl;
 			if(nodo->getTipo()==1){  // si el nodo es un hijo izquierdo
 				nodo->getPadre()->setIzq(NULL);
 			}else if(nodo->getTipo()==2){ // si el nodo es un hijo derecho
@@ -343,28 +331,66 @@ void Arbol::borrarNodo(int info){
 			}		
 		}else{ // el nodo tiene ambos hijos
 			cout<<"\tEl nodo tiene dos hijos..."<<endl;
+			system("pause");
 			// Buscar el nodo mayor del lado izquierdo o el menor del lado derecho
 			// En este caso se utiliza el nodo de mayor valor del subárbol izquierdo
 			sustituto = buscarMayorIzq(nodo);
 			// Reemplazar el nodo encontrado por el que se quiere borrar
+			cout<<"el mayor de la izquierda es: "<<sustituto->getInfo()<<endl;
 			nodo->setInfo(sustituto->getInfo());
+			if(nodo->getIzq()==sustituto){
+				if(sustituto->getIzq()!=NULL){
+					sustituto->getIzq()->setPadre(nodo);
+					nodo->setIzq(sustituto->getIzq());
+				}else{
+					nodo->setIzq(NULL);
+				}
+			}else{
+				if(sustituto->getIzq()!=NULL){
+					aux = sustituto->getIzq();
+					sustituto->getPadre()->setDer(aux);
+					aux->setPadre(sustituto->getPadre());
+					aux->setTipo(2);
+				}else{
+					sustituto->getPadre()->setDer(NULL);
+				}
+			}
 			nodo = sustituto;
+			/*nodo = sustituto;
 			if(nodo->getIzq()!= NULL){
-				if(nodo->getPadre()!=NULL){
+				//if(nodo->getPadre()!=NULL){
 					nodo->getIzq()->setPadre(nodo->getPadre());
-				}				
+				//}				
 				nodo->getPadre()->setDer(nodo->getIzq());
 				nodo->getIzq()->setTipo(nodo->getTipo());
+				nodo->setPadre(NULL);
+				nodo->setIzq(NULL);
 			}else{
 				if(nodo->getTipo()==1){
 					nodo->getPadre()->setIzq(NULL);
 				}else if(nodo->getTipo()==2){
 					nodo->getPadre()->setDer(NULL);
-				}				
-			}
+				}	
+				nodo->setPadre(NULL);			
+			}*/
 		}
 		delete nodo;
 		nodo = NULL;
+		cout<<"se va a calcular el equilibrio"<<endl;
+		system("pause");
+		if(raiz!=NULL){
+			Nodo *nodoAux = calcularEquilibrio();
+			cout<<"equilibrio calculado"<<endl;
+			system("pause");
+			if(nodoAux!=NULL){
+				cout<<"\n\tRestructurando..."<<endl;
+				restructurar(nodoAux);
+			}else{
+				cout<<"no hay restructuracion"<<endl;
+			}
+		}else{
+			cout<<"raiz null"<<endl;
+		}
 	}
 }
 
@@ -392,6 +418,7 @@ Nodo* Arbol::calcularEquilibrio(){
 	while(raiz->getRevision()<=2&&!fallo){
 		cout<<"nodo: "<<nodo->getInfo()<<endl;
 		cout<<"estado del nodo: "<<nodo->getRevision()<<endl;
+		system("pause");
 		switch(nodo->getRevision()){
 			case 0: 
 				// revisa si el nodo tiene hijo izquierdo
@@ -428,7 +455,7 @@ Nodo* Arbol::calcularEquilibrio(){
 					altura = (nodo->getAlturaIzq()>=nodo->getAlturaDer())?nodo->getAlturaIzq():nodo->getAlturaDer();
 					altura++;
 					if(nodo->getTipo()==0){
-						cout<<"Nodo raiz equilibrado..."<<endl;
+//						cout<<"Nodo raiz equilibrado..."<<endl;
 						raiz->setRevision(3);
 					}else{
 						nodo->setRevision(0);
@@ -527,6 +554,7 @@ void Arbol::restructurar(Nodo *n){
 		break;
 		case 2:
 			cout<<"ID"<<endl;
+			// Determinar los nuevos enlaces para el nodo padre del subárbol
 			if(nodo1==raiz){
 				raiz = nodo3;
 				nodo3->setTipo(0);
@@ -541,21 +569,30 @@ void Arbol::restructurar(Nodo *n){
 					aux->setDer(nodo3);
 				}
 			}
+			// si nodo3 tiene hijo derecho, este pasa como hijo izquierdo de nodo1
 			if(nodo3->getDer()!=NULL){
 				nodo1->setIzq(nodo3->getDer());
+				nodo1->getIzq()->setTipo(1);
+				nodo3->getDer()->setPadre(nodo1);
 			}else{
 				nodo1->setIzq(NULL);
 			}
+			// si nodo3 tiene hijo izquierdo, este pasa como hijo derecho de nodo2
 			if(nodo3->getIzq()!=NULL){
 				nodo2->setDer(nodo3->getIzq());
+				nodo2->getDer()->setTipo(2);
+				nodo3->getIzq()->setPadre(nodo2);
 			}else{
 				nodo2->setDer(NULL);
 			}
+			// establecer los enlaces entre los nodos nodo1 a nodo3
 			nodo1->setPadre(nodo3);
+			nodo3->setDer(nodo1);
 			nodo1->setTipo(2);
+			
 			nodo2->setPadre(nodo3);
 			nodo3->setIzq(nodo2);
-			nodo3->setDer(nodo1);
+			
 		break;
 		case 3:
 			cout<<"DI"<<endl;
@@ -607,7 +644,7 @@ void Arbol::restructurar(Nodo *n){
 
 			//cout<<"nodo2->der"<<nodo2->getDer()->getInfo()<<endl;
 			//cout<<"nodo2->izq"<<nodo2->getIzq()->getInfo()<<endl;
-			system("pause");
+//			system("pause");
 		break;
 		case 4:
 			cout<<"DD"<<endl;
@@ -641,10 +678,17 @@ void Arbol::restructurar(Nodo *n){
 	}
 }
 
-/* Mostrar un representación del árbol en pantalla*/
+/*	Mostrar un representación del árbol en pantalla
+	La variable nivel se utiliza para indentar cada elemento del árbol. Se inicializa a 0,
+	representando la raíz del árbol.
+	El recorrido es similar al recorrido en preorden, pero en cada salto de nodo, se incrementa
+	o decrementa la variable nivel.
+*/
 void Arbol::mostrarArbol(){
 	Nodo *nodo = raiz; // hacer que la variable nodo apunte a la raíz del árbol, para no perder la referencia
 	int nivel = 0; // usada para la indentación de los nodos
+	//cout<<"mostrando arbol"<<endl;
+	//system("pause");
 	while(raiz->getRevision()<3){
 		//cout<<"nodo: "<<nodo->getInfo()<<endl;
 		//cout<<"estado del nodo: "<<nodo->getRevision()<<endl;
@@ -670,8 +714,8 @@ void Arbol::mostrarArbol(){
 				if(nodo->getIzq()!=NULL){
 					nodo = nodo->getIzq();
 					nivel++;
-					//cout<<"bajando nivel estado 1"<<endl;
-					//system("pause");
+//					cout<<"bajando nivel estado 1"<<endl;
+//					system("pause");
 				}
 			break;
 			case 2:
@@ -685,14 +729,14 @@ void Arbol::mostrarArbol(){
 						}
 						nodo = nodo->getPadre();
 						nivel--;
-						//cout<<"subiendo nivel estado 2"<<endl;
-						//system("pause");
+//						cout<<"subiendo nivel estado 2"<<endl;
+//						system("pause");
 					}
 				}else{
 					nodo = nodo->getDer();
 					nivel++;
-					//cout<<"bajando nivel estado 2"<<endl;
-					//system("pause");
+//					cout<<"bajando nivel estado 2"<<endl;
+//					system("pause");
 				}
 			break;
 			case 3:
@@ -702,10 +746,11 @@ void Arbol::mostrarArbol(){
 				}
 				nodo = nodo->getPadre();	
 				nivel--;	
-				//cout<<"subiendo nivel estado 3"<<endl;
-				//system("pause");
+//				cout<<"subiendo nivel estado 3"<<endl;
+//				system("pause");
 			break;
 		}
+//		system("pause");
 	}
 	raiz->setRevision(0);
 }
